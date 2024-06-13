@@ -36,10 +36,12 @@ char	*trim(char *str)
 	return (rtrim(ltrim(str)));
 }
 
-static void	exec(char **cmd, char **envp)
+static void	exec(char **cmd, t_env *n_envp)
 {
 	char	*path;
+	char	**envp;
 
+	envp = ft_transform(n_envp);
 	if (!*cmd || !cmd)
 		return ;
 	if (!cmd)
@@ -100,7 +102,7 @@ static void	ft_check(t_simple_cmds *cmd, int fd, int sv_stdin)
 	}
 }
 
-static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, char **env_p, t_env *envpp)
+static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
 {
 	int	fd;
 	int	sv_stdin;
@@ -125,15 +127,15 @@ static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, char **env_p, t_en
 		cmd->builton = cmd->str[0];
 	//b_exec(cmd->str, envp, cmd);
 		//write(2, "jo\n", 3);
-		launch_b(cmd->str, cmd, env_p, envpp);
+		launch_b(cmd->str, cmd, n_envp);
 	}
 	else if (check_built_ins(cmd->str) == 1)
-		exec(cmd->str, env_p);
+		exec(cmd->str, n_envp);
 	close(sv_stdin);
 	//exec(cmd->str, env_p);
 }
 
-static pid_t	ft_pipe(t_simple_cmds *cmd, char **env_p, int nb, int argc, t_env *envpp)
+static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
 {
 	pid_t	pid;
 
@@ -147,7 +149,7 @@ static pid_t	ft_pipe(t_simple_cmds *cmd, char **env_p, int nb, int argc, t_env *
 		exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
-		ft_proccess(cmd, nb, argc, env_p, envpp);
+		ft_proccess(cmd, nb, argc, n_envp);
 		exit(EXIT_SUCCESS);
 	}
 	ft_close(&cmd->p_fd_input[0]);
@@ -160,7 +162,7 @@ static pid_t	ft_pipe(t_simple_cmds *cmd, char **env_p, int nb, int argc, t_env *
 	return (pid);
 }
 
-void	ft_multi_pipe(int argc, t_simple_cmds *list, char **env_p, t_env *envpp)
+void	ft_multi_pipe(int argc, t_simple_cmds *list, t_env *n_envp)
 {
 	int		i;
 	int		status;
@@ -175,7 +177,7 @@ void	ft_multi_pipe(int argc, t_simple_cmds *list, char **env_p, t_env *envpp)
 	list->p_fd_input[1] = -1;
 	while (++i <= argc)
 	{
-		pid[i] = ft_pipe(list, env_p, i, argc, envpp);
+		pid[i] = ft_pipe(list, i, argc, n_envp);
 		if (list->next)
 			list = list->next;
 	}

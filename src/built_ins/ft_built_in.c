@@ -32,7 +32,7 @@ int	check_built_ins(char **str)
 		return (1);
 }
 
-void	launch_b(char **str, t_simple_cmds *cmd, char **env_p, t_env *envpp)
+void	launch_b(char **str, t_simple_cmds *cmd, t_env *n_envp)
 {
 	if (str && ft_strncmp("echo", str[0], 4) == 0)
 		ft_echo(cmd);
@@ -41,11 +41,11 @@ void	launch_b(char **str, t_simple_cmds *cmd, char **env_p, t_env *envpp)
 	else if (str && ft_strncmp("pwd", str[0], 3) == 0)
 		ft_pwd(cmd);
 	else if (str && ft_strncmp("export", str[0], 6) == 0)
-		ft_export(cmd, env_p, envpp);
+		ft_export(cmd, n_envp);
 	else if (str && ft_strncmp("unset", str[0], 5) == 0)
 		ft_unset(cmd);
 	else if (str && ft_strncmp("env", str[0], 3) == 0)
-		ft_env(cmd, env_p, envpp);
+		ft_env(cmd, n_envp);
 	else if (str && ft_strncmp("exit", str[0], 4) == 0)
 		ft_exit(cmd);
 	else

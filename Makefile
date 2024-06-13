@@ -32,6 +32,7 @@ SRC     = src/lexer/ft_str_utils.c\
 			src/exec/ft_free.c\
 			src/exec/ft_lexer.c\
 			src/exec/ft_meta_mgmt.c\
+			src/exec/ft_add_envp.c\
 			src/expander/ft_expander.c\
 			src/expander/ft_expander_utils.c\
 			src/built_ins/ft_cd.c\

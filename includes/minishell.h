@@ -104,8 +104,11 @@ typedef struct s_pipex
 	char	*cmd;
 }	t_pipex;
 
-typedef struct s_env
-{
+typedef struct s_env {
+	//int				export;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 	char			**env;
 }	t_env;
 
@@ -127,12 +130,12 @@ typedef struct s_simple_cmds
 	t_lexer					*redirections;
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;
-	char					**envp;
+	t_env					*envp;
 	int						exit;
 }	t_simple_cmds;
 
 //main
-void			minishell_loop(char *line, char **envp, char **env);
+void			minishell_loop(char *line, char **envp);
 char			*trim(char *str);
 
 //signals
@@ -146,12 +149,12 @@ int				ft_meta(char *c);
 int				list_parkour(t_lexer *list);
 void			ft_first_iter(char *args[], char *envp[]);
 int				ft_stacklen(t_lexer *list);
-void			command_executer(char **args, char **envp, t_simple_cmds *list, char **env_p, t_env *envpp);
+void			command_executer(char **args, t_simple_cmds *list, t_env *n_envp);
 void			ft_heredoc(char *args[], char *envp[]);
 void			ft_input(char *args[], char *envp[]);
 char			*find_path(char **envp, t_pipex *pipex);
 char			*parsing(char **cmd_paths, char *cmd_args);
-void			ft_multi_pipe(int argc, t_simple_cmds *list, char **env_p, t_env *envpp);
+void			ft_multi_pipe(int argc, t_simple_cmds *list, t_env *n_envp);
 void			open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb);
 void			here_txt(char *limiter, t_simple_cmds *cmd, int fd);
 char			*get_path(char *cmd, char **envp);
@@ -163,6 +166,8 @@ t_pipex			ft_dispatch(t_pipex exec, char *arg);
 int				ft_meta_str(char c);
 int				list_parkour_str(char *list);
 void			ft_meta_mgmt(char *cmd, char **envp);
+t_env			*ft_init_envp(char **envp, t_env *n_envp);
+char			**ft_transform(t_env *n_envp);
 
 //expand
 char			*get_env_value(const char *var_name);
@@ -207,13 +212,13 @@ void			child_free(t_pipex *pipex);
 
 //built_ins
 int				check_built_ins(char **str);
-void			launch_b(char **str, t_simple_cmds *cmd, char **env_p, t_env *envpp);
+void			launch_b(char **str, t_simple_cmds *cmd, t_env *n_envp);
 int				ft_echo(t_simple_cmds *cmd);
 int				ft_cd(t_simple_cmds *cmd);
 int				ft_pwd(t_simple_cmds *cmd);
-char			**ft_export(t_simple_cmds *cmd, char **env_p, t_env *envpp);
+t_env			*ft_export(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_unset(t_simple_cmds *cmd);
-int				ft_env(t_simple_cmds *cmd, char **env_p, t_env *envpp);
+int				ft_env(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_exit(t_simple_cmds *cmd);
 
 //utils

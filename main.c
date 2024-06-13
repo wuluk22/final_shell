@@ -47,14 +47,14 @@ static void	cleanup_cmd_list(t_simple_cmds *cmd_list)
 	}
 }
 
-static int	process_command(char *line, char **envp, char **env_p, t_env *envpp)
+static int	process_command(char *line, t_env *n_envp)
 {
 	t_lexer			*lexer_list;
 	t_simple_cmds	*cmd_list;
 
 	lexer_list = NULL;
 	cmd_list = NULL;
-	if (!line | !envp | !env_p)
+	if (!line)
 	{
 		perror("error reading command");
 		return (0);
@@ -78,7 +78,7 @@ static int	process_command(char *line, char **envp, char **env_p, t_env *envpp)
 			}
 		}
 		else
-			command_executer(cmd_list->str, envp, cmd_list, env_p, envpp);
+			command_executer(cmd_list->str, cmd_list, n_envp);
 	}
 	/*t_env *current = env_list;
     while (current) {
@@ -93,33 +93,13 @@ static int	process_command(char *line, char **envp, char **env_p, t_env *envpp)
 	return (0);
 }
 
-void	minishell_loop(char *line, char **envp, char **env)
+void	minishell_loop(char *line, char **envp)
 {
-	char	**env_p;
-	t_env	*envpp;
-	size_t	envp_len;
-	size_t	i;
+	t_env	*n_envp;
 
-	i = 0;
-	envp_len = 0;
-	while (envp[envp_len])
-		envp_len++;
-	env_p = malloc(sizeof(char *) * (sizeof(envp) / sizeof(envp[0])));
-	envpp = malloc(sizeof(t_env));
-	envpp->env = malloc((envp_len + 1) * sizeof(char *));
-	if (!env_p | !envpp | !envpp->env)
-	{
-		free(envpp);
-		return ;
-	}
-	while (i < envp_len) 
-	{
-		envpp->env[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	envpp->env[envp_len] = NULL;
-	env_p = envp;
-	(void)env;
+	n_envp = malloc(sizeof(t_env *));
+	n_envp = ft_init_envp(envp, n_envp);
+	ft_transform(n_envp);
 	while (1)
 	{
 		ft_set_input_signals();
@@ -127,7 +107,7 @@ void	minishell_loop(char *line, char **envp, char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		if (process_command(line, envp, env_p, envpp))
+		if (process_command(line, n_envp))
 		{
 			free(line);
 			break ;
@@ -173,7 +153,7 @@ void	minishell_loop(char *line, char **envp, char **env)
 	}
 }*/
 
-int	main(int argc, char **argv, char **envp, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
@@ -181,7 +161,7 @@ int	main(int argc, char **argv, char **envp, char **env)
 	(void)argv;
 	line = malloc(sizeof(char *));
 	line = NULL;
-	minishell_loop(line, envp, env);
+	minishell_loop(line, envp);
 	return (EXIT_SUCCESS);
 }
 

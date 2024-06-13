@@ -1,18 +1,17 @@
 #include "../../includes/minishell.h"
 
-int	ft_env(t_simple_cmds *cmd, char **env_p, t_env *envpp)
+int	ft_env(t_simple_cmds *cmd, t_env *n_envp)
 {
 	(void)cmd;
-	(void)env_p;
-	int	i;
+	int		i;
+	char	**str;
 
 	i = 0;
-	while(envpp->env[i])
+	str = NULL;
+	str = ft_transform(n_envp);
+	while (str[i])	
 	{
-		if (envpp->env[i])
-		{
-			printf("-%s\n", envpp->env[i]);
-		}
+		printf("|-%s\n", str[i]);
 		i++;
 	}
 	return (0);

@@ -122,7 +122,7 @@ int	ft_stacklen(t_lexer *list)
 
 */
 
-void	command_executer(char **args, char **envp, t_simple_cmds *list, char **env_p, t_env *envpp)
+void	command_executer(char **args, t_simple_cmds *list, t_env *n_envp)
 {
 	int				i;
 	t_simple_cmds	*head;
@@ -130,7 +130,6 @@ void	command_executer(char **args, char **envp, t_simple_cmds *list, char **env_
 	head = malloc(sizeof(t_simple_cmds));
 	head = NULL;
 	i = 0;
-	(void)envp;
 	(void)args;
 	if (list)
 	{
@@ -144,18 +143,6 @@ void	command_executer(char **args, char **envp, t_simple_cmds *list, char **env_
 			i++;
 		}
 		list = head;
-		ft_multi_pipe(i, list, env_p, envpp);
+		ft_multi_pipe(i, list, n_envp);
 	}
 }
-/*
-		i vaut au nombre d'arguments de pipe et pas au nombre de "|"
-		printf("\ni = %d\n", i);
-		printf("\nbefore m\n");
-		printf("\nafter m\n");
-	else
-	{
-		printf("before ex\n");
-		execute_command(envp, list->str);
-		printf("after ex\n");
-	}
-*/

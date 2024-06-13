@@ -35,7 +35,7 @@ int	ft_exit(t_simple_cmds *cmd)
 		exit(g_exit_global);
 		return (0);
 	}
-	else if (parcour(cmd->str) == 2)
+	else if (parcour(cmd->str) == 2 || !ft_is_strnum(cmd->str[1]))
 	{
 		if (ft_is_strnum(cmd->str[1]))
 		{
@@ -48,13 +48,14 @@ int	ft_exit(t_simple_cmds *cmd)
 		else
 		{
 			//write(2, "L\n", 2);
+			ft_putstr_fd("numeric argument required\n", 2);
 			exit(255);
 			return (0);
 		}
 	}
 	else
 	{
-		ft_putstr_fd("too many\n", 2);
+		ft_putstr_fd("too many arguments\n", 2);
 		return (1);
 	}
 }

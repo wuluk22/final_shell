@@ -56,11 +56,16 @@ int	ft_echo(t_simple_cmds *cmd)
 	i = 1;
 	newline = 0;
 
-	if (cmd->str[i] && strcmp(cmd->str[i], "-n") == 0)
+	if (cmd->str[i] && ft_strncmp(cmd->str[i], "-n", 2) == 0)
 	{
 		newline = 1;
 		i++;
 	}
+    else if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0)
+    {
+        write(1, "$", 1);
+        return (EXIT_SUCCESS);
+    }
 
 	int j = 0;
 	while (cmd->str[j])
