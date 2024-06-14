@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 18:24:08 by clegros           #+#    #+#             */
+/*   Updated: 2024/06/14 18:39:39 by clegros          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static t_env	*ft_remove(t_simple_cmds *cmd, t_env **n_envp)
@@ -15,7 +27,6 @@ static t_env	*ft_remove(t_simple_cmds *cmd, t_env **n_envp)
 		{
 			current->key = NULL;
 			current->value = NULL;
-			//printf("%s\n", current->key);
 		}
 		if (current->key != NULL)
 		{
@@ -33,14 +44,12 @@ static t_env	*ft_remove(t_simple_cmds *cmd, t_env **n_envp)
 				new_envp->next = new_node;
 				new_envp = new_envp->next;
 			}
-			//printf("------------1");
 		}
 		if (current->next == NULL)
-			break;
+			break ;
 		current = current->next;
 	}
 	return (head);
-
 }
 
 t_env	*ft_unset(t_simple_cmds *cmd, t_env *n_envp)

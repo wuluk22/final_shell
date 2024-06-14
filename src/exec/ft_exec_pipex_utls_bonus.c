@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 12:11:34 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/05/29 13:01:03 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:36:22 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	here_txt(char *limiter, t_simple_cmds *cmd, int fd)
 {
 	char	*line;
 	(void)cmd;
-
 	while (1)
 	{
 		line = readline("> ");
@@ -33,7 +32,6 @@ void	here_txt(char *limiter, t_simple_cmds *cmd, int fd)
 	}
 	//unlink(".fd_Yann.txt");
 }
-
 
 static char	*ft_free_tab(char **tabs)
 {

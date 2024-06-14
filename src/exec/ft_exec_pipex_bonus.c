@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:48:28 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/14 17:02:15 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:37:54 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	ft_close(int *fd)
 	close(*fd);
 	*fd = -1;
 }
-
 
 void	open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb)
 {
@@ -128,16 +127,11 @@ static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
 	if (check_built_ins(cmd->str) == 0)
 	{
 		cmd->builton = cmd->str[0];
-	//b_exec(cmd->str, envp, cmd);
-		//write(2, "jo\n", 3);i
-		// printf("Debug time baby, str before: %s\n", n_envp->key);
 		launch_b(cmd->str, cmd, n_envp);
-		// printf("Debug time baby, str after: %s\n", n_envp->key);
 	}
 	else if (check_built_ins(cmd->str) == 1)
 		exec(cmd->str, *n_envp);
 	close(sv_stdin);
-	//exec(cmd->str, env_p);
 }
 
 static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
@@ -160,10 +154,8 @@ static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
 	ft_close(&cmd->p_fd_input[0]);
 	ft_close(&cmd->p_fd_output[1]);
 	if (cmd->next)
-		ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
-				sizeof(cmd->p_fd_input));
+		ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output, sizeof(cmd->p_fd_input));
 	cmd->p_fd_output[0] = -1;
-//cmd->p_fd_output[1] = -1;
 	wait(NULL);
 	return (pid);
 }

@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:24:45 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/29 10:24:48 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:35:00 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_occurrences(const char *str, const char *old_substr)
 	return (count);
 }
 
-void delete_quotes(char *str, char c)
+void	delete_quotes(char *str, char c)
 {
 	int	i;
 	int	j;

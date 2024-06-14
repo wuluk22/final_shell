@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:02:02 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:27:22 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static char	*expand_variable(const char *arg)
 			if (*(dollar_pos + 1) == '?')
 				replacement = replace_exit_status(expanded_arg);
 			else
-				replacement = replace_env_variable(expanded_arg, dollar_pos)
+				replacement = replace_env_variable(expanded_arg, dollar_pos);
 			if (!replacement)
 			{
 				free(expanded_arg);

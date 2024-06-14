@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_add_envp.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 18:24:35 by clegros           #+#    #+#             */
+/*   Updated: 2024/06/14 18:39:04 by clegros          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	**ft_transform(t_env *n_envp)
 {
 	char	**str;
-	//char	*temp;
-	//char	*temp2;
 	t_env	*head;
 	int		i;
 	int		count;
@@ -24,10 +34,8 @@ char	**ft_transform(t_env *n_envp)
 	str = malloc((count + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
-	//write(2, "yo\n", 3);
 	while (n_envp->next != NULL)
 	{
-		//printf("--%s--\n", n_envp->key);
 		str[i] = ft_strdup(n_envp->key);
 		str[i] = ft_strjoin(str[i], "=");
 		str[i] = ft_strjoin(str[i], n_envp->value);
@@ -38,11 +46,6 @@ char	**ft_transform(t_env *n_envp)
 	str[i] = NULL;
 	n_envp = head;
 	i = 0;
-	/*while (str[i])
-	{
-		printf("--%s--\n", str[i]);
-		i++;
-	}*/
 	return (str);
 }
 
@@ -57,12 +60,10 @@ t_env	*ft_init_envp(char **envp, t_env *n_envp)
 	i = 0;
 	j = 0;
 	k = 1;
-	//n_envp = malloc(sizeof(t_env *));
 	head = n_envp;
-	while(envp[i])
+	while (envp[i])
 	{
 		temp = ft_split(envp[i], '=');
-		//printf("--yo--%s\n", temp[0]);
 		n_envp->key = ft_strdup(temp[0]);
 		if (!ft_strncmp("LS_COLORS", temp[0], 9))
 		{
@@ -100,12 +101,5 @@ t_env	*ft_init_envp(char **envp, t_env *n_envp)
 		free(temp);
 	}
 	n_envp = head;
-/*while (n_envp->next != NULL)
-	{
-		printf("--key:%s    --val:%s\n", n_envp->key, n_envp->value);
-		if (n_envp->next)
-			n_envp = n_envp->next;
-}*/
-	//write(2, "yi\n", 3);
 	return (n_envp);
 }

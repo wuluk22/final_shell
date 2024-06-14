@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 18:23:40 by clegros           #+#    #+#             */
+/*   Updated: 2024/06/14 18:23:52 by clegros          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static t_env	*ft_add_envp(t_env **n_envp, char **args)
@@ -15,7 +27,6 @@ static t_env	*ft_add_envp(t_env **n_envp, char **args)
 			free(current->value);
 			current->value = ft_strdup(args[1]);
 			current = head;
-			//ft_env(NULL, current);
 			return (current);
 		}
 		if (current->next == NULL)
@@ -28,12 +39,8 @@ static t_env	*ft_add_envp(t_env **n_envp, char **args)
 	new_node->key = ft_strdup(args[0]);
 	new_node->value = ft_strdup(args[1]);
 	new_node->next = NULL;
-	//current->next = malloc(sizeof(t_env));
 	if (head)
 		new_node->next = head;
-	//n_envp = n_envp->next;
-	//printf("--%s--  --%s--\n", n_envp->key, n_envp->value);
-	//ft_env(NULL, current);
 	return (new_node);
 }
 

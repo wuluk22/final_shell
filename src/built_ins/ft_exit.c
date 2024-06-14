@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/14 18:23:13 by clegros           #+#    #+#             */
+/*   Updated: 2024/06/14 18:41:04 by clegros          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static int	parcour(char **str)
@@ -9,6 +21,7 @@ static int	parcour(char **str)
 		i++;
 	return (i);
 }
+
 static int	ft_is_strnum(char *str)
 {
 	int	i;
@@ -24,14 +37,13 @@ static int	ft_is_strnum(char *str)
 	}
 	return (1);
 }
+
 int	ft_exit(t_simple_cmds *cmd)
 {
-	//printf("-_-\n");
 	int	ret;
 
 	if (parcour(cmd->str) == 1)
 	{
-		//write(2, "1\n", 2);
 		exit(g_exit_global);
 		return (0);
 	}
@@ -40,14 +52,11 @@ int	ft_exit(t_simple_cmds *cmd)
 		if (ft_is_strnum(cmd->str[1]))
 		{
 			ret = ft_atoi(cmd->str[1]);
-			//write(2, "2\n", 2);
-			//printf("-%s-\n%c\n", cmd->str[1], ret);
 			exit(ret);
 			return (0);
 		}
 		else
 		{
-			//write(2, "L\n", 2);
 			ft_putstr_fd("numeric argument required\n", 2);
 			exit(255);
 			return (0);

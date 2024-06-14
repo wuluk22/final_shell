@@ -6,32 +6,11 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 17:05:23 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:21:51 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-/*static void	init(char *args, t_lexer *lexer_list, t_simple_cmds *cmd_list)
-{
-	tokenize(args, &lexer_list);
-	lexer_to_cmds(&lexer_list, &cmd_list);
-	if (cmd_list)
-		expander(cmd_list);
-}*/
-
-/*static void	null(char *args, char *line, t_simple_cmds *cmd_list)
-{
-	args = NULL;
-	line = NULL;
-	while (cmd_list)
-	{
-		cmd_list->str = NULL;
-		cmd_list = cmd_list->next;
-	}
-}
-*/
-
 
 static void	cleanup_cmd_list(t_simple_cmds *cmd_list)
 {
@@ -61,11 +40,8 @@ static int	process_command(char *line, t_env **n_envp)
 	}
 	tokenize(line, &lexer_list);
 	lexer_to_cmds(&lexer_list, &cmd_list);
-	//write(1, cmd_list->str[1], ft_strlen(cmd_list->str[1]));
-	//write(1, "\n", 1);
 	if (cmd_list)
 		expander(cmd_list);
-	//cmd_list->envp = env_p;
 	if (cmd_list && cmd_list->str)
 	{
 		if (ft_strncmp(cmd_list->str[0], "exit", 4) == 0)
@@ -95,14 +71,6 @@ static int	process_command(char *line, t_env **n_envp)
 		else
 			command_executer(cmd_list->str, cmd_list, n_envp);
 	}
-	/*t_env *current = env_list;
-    while (current) {
-        t_env *next = current->next;
-        free(current->key);
-        free(current->value);
-        free(current);
-        current = next;
-    }*/
 	cleanup_cmd_list(cmd_list);
 	free_list(lexer_list);
 	return (0);
@@ -129,44 +97,8 @@ void	minishell_loop(char *line, char **envp)
 		}
 		if (line)
 			free(line);
-		//g_exit_global = 0;
 	}
 }
-
-/*void	minishell_loop(char *line, char **envp)
-{
-	t_lexer			*lexer_list;
-	t_simple_cmds	*cmd_list;
-	char			*args;
-
-	cmd_list = malloc(sizeof(t_simple_cmds));
-	(void)envp;
-	lexer_list = NULL;
-	cmd_list = NULL;
-	while (1)
-	{
-		ft_set_input_signals();
-		line = readline("minishell>> ");
-		if (!line)
-			break ;
-		add_history(line);
-		args = line;
-		tokenize(args, &lexer_list);
-		lexer_to_cmds(&lexer_list, &cmd_list);
-		if (cmd_list)
-			expander(cmd_list);
-		if (cmd_list)
-			if (cmd_list->str)
-				command_executer(cmd_list->str, envp, cmd_list);
-		args = NULL;
-		line = NULL;
-		while (cmd_list)
-		{
-			cmd_list->str = NULL;
-			cmd_list = cmd_list->next;
-		}
-	}
-}*/
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -179,36 +111,4 @@ int	main(int argc, char **argv, char **envp)
 	minishell_loop(line, envp);
 	return (EXIT_SUCCESS);
 }
-
-/*
-	t_lexer			*redir;
-	int				i;
-		while (cmd_list != NULL)
-		{
-			i = 0;
-			printf("\n\nCommand:\n");
-			while (cmd_list->str[i] != NULL)
-			{
-				printf("  %s\n", cmd_list->str[i]);
-				i++;
-			}
-			printf("\n\nRedirections:\n");
-			redir = cmd_list->redirections;
-			while (redir != NULL)
-			{
-				printf("  %s\n", redir->token);
-				redir = redir->next;
-			}
-			cmd_list = cmd_list->next;
-		}
-		free_list(lexer_list);
-		free_cmds(cmd_list);
-		while (list)
-		{
-			printf("f0ff----%s|%d|%s\n", list->str, list->i, list->chr);
-			list = list->next;
-		}
-		if (strcmp(list.cmd, "exit") == 0)
-			break ;
-		system("leaks ./minishell");
-*/
+//system("leaks ./minishell");
