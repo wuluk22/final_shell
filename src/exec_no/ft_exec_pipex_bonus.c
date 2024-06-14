@@ -131,7 +131,7 @@ static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, char **env_p)
 		cmd->builton = cmd->str[0];
 	//b_exec(cmd->str, envp, cmd);
 		//write(2, "jo\n", 3);
-		launch_b(cmd->str, cmd, cmd->envp);
+		launch_b(cmd->str, cmd, &cmd->envp);
 	}
 	else if (check_built_ins(cmd->str) == 1)
 		exec(cmd->str, env_p);

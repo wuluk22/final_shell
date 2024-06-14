@@ -149,12 +149,12 @@ int				ft_meta(char *c);
 int				list_parkour(t_lexer *list);
 void			ft_first_iter(char *args[], char *envp[]);
 int				ft_stacklen(t_lexer *list);
-void			command_executer(char **args, t_simple_cmds *list, t_env *n_envp);
+void			command_executer(char **args, t_simple_cmds *list, t_env **n_envp);
 void			ft_heredoc(char *args[], char *envp[]);
 void			ft_input(char *args[], char *envp[]);
 char			*find_path(char **envp, t_pipex *pipex);
 char			*parsing(char **cmd_paths, char *cmd_args);
-void			ft_multi_pipe(int argc, t_simple_cmds *list, t_env *n_envp);
+void			ft_multi_pipe(int argc, t_simple_cmds *list, t_env **n_envp);
 void			open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb);
 void			here_txt(char *limiter, t_simple_cmds *cmd, int fd);
 char			*get_path(char *cmd, char **envp);
@@ -212,7 +212,7 @@ void			child_free(t_pipex *pipex);
 
 //built_ins
 int				check_built_ins(char **str);
-void			launch_b(char **str, t_simple_cmds *cmd, t_env *n_envp);
+void			launch_b(char **str, t_simple_cmds *cmd, t_env **n_envp);
 int				ft_echo(t_simple_cmds *cmd);
 int				ft_cd(t_simple_cmds *cmd);
 int				ft_pwd(t_simple_cmds *cmd);

@@ -47,7 +47,7 @@ static void	cleanup_cmd_list(t_simple_cmds *cmd_list)
 	}
 }
 
-static int	process_command(char *line, t_env *n_envp)
+static int	process_command(char *line, t_env **n_envp)
 {
 	t_lexer			*lexer_list;
 	t_simple_cmds	*cmd_list;
@@ -76,6 +76,11 @@ static int	process_command(char *line, t_env *n_envp)
 				free_list(lexer_list);
 				return (1);
 			}
+		}
+		else if (ft_strncmp(cmd_list->str[0], "export", 6) == 0)
+		{
+			*n_envp = ft_export(cmd_list, *n_envp);
+			return (0);
 		}
 		else
 			command_executer(cmd_list->str, cmd_list, n_envp);
@@ -107,7 +112,7 @@ void	minishell_loop(char *line, char **envp)
 		if (!line)
 			break ;
 		add_history(line);
-		if (process_command(line, n_envp))
+		if (process_command(line, &n_envp))
 		{
 			free(line);
 			break ;

@@ -122,7 +122,7 @@ int	ft_stacklen(t_lexer *list)
 
 */
 
-void	command_executer(char **args, t_simple_cmds *list, t_env *n_envp)
+void	command_executer(char **args, t_simple_cmds *list, t_env **n_envp)
 {
 	int				i;
 	t_simple_cmds	*head;

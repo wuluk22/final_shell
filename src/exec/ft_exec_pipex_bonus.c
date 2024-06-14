@@ -102,7 +102,7 @@ static void	ft_check(t_simple_cmds *cmd, int fd, int sv_stdin)
 	}
 }
 
-static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
+static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
 {
 	int	fd;
 	int	sv_stdin;
@@ -126,16 +126,18 @@ static void	ft_proccess(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
 	{
 		cmd->builton = cmd->str[0];
 	//b_exec(cmd->str, envp, cmd);
-		//write(2, "jo\n", 3);
+		//write(2, "jo\n", 3);i
+		// printf("Debug time baby, str before: %s\n", n_envp->key);
 		launch_b(cmd->str, cmd, n_envp);
+		// printf("Debug time baby, str after: %s\n", n_envp->key);
 	}
 	else if (check_built_ins(cmd->str) == 1)
-		exec(cmd->str, n_envp);
+		exec(cmd->str, *n_envp);
 	close(sv_stdin);
 	//exec(cmd->str, env_p);
 }
 
-static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
+static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
 {
 	pid_t	pid;
 
@@ -162,7 +164,7 @@ static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env *n_envp)
 	return (pid);
 }
 
-void	ft_multi_pipe(int argc, t_simple_cmds *list, t_env *n_envp)
+void	ft_multi_pipe(int argc, t_simple_cmds *list, t_env **n_envp)
 {
 	int		i;
 	int		status;
