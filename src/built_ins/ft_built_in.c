@@ -37,7 +37,7 @@ void	launch_b(char **str, t_simple_cmds *cmd, t_env **n_envp)
 	if (str && ft_strncmp("echo", str[0], 4) == 0)
 		ft_echo(cmd);
 	else if (str && ft_strncmp("cd", str[0], 2) == 0)
-		ft_cd(cmd);
+		*n_envp = ft_cd(cmd, *n_envp);
 	else if (str && ft_strncmp("pwd", str[0], 3) == 0)
 		ft_pwd(cmd);
 	else if (str && ft_strncmp("export", str[0], 6) == 0)
