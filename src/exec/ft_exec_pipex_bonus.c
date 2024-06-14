@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:48:28 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:24:45 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 17:02:15 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	ft_close(int *fd)
 	*fd = -1;
 }
 
+
 void	open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb)
 {
 	if (nb == 0)
@@ -75,12 +76,14 @@ void	open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb)
 		close(fd);
 		fd = open("feuys.txt", O_RDONLY, 0777);
 		dup2(fd, 0);
+		close(fd);
 	}
 	if (nb == 0 || nb == 1)
 		dup2(fd, 1);
 	if (nb == 2)
 		dup2(fd, 0);
-	close(fd);
+	if (nb == 3)
+		dup2(STDOUT_FILENO, 1);
 }
 
 static void	ft_check(t_simple_cmds *cmd, int fd, int sv_stdin)
@@ -161,6 +164,7 @@ static pid_t	ft_pipe(t_simple_cmds *cmd, int nb, int argc, t_env **n_envp)
 				sizeof(cmd->p_fd_input));
 	cmd->p_fd_output[0] = -1;
 //cmd->p_fd_output[1] = -1;
+	wait(NULL);
 	return (pid);
 }
 

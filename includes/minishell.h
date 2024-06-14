@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/14 15:51:35 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 16:00:18 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int				ft_echo(t_simple_cmds *cmd);
 int				ft_cd(t_simple_cmds *cmd);
 int				ft_pwd(t_simple_cmds *cmd);
 t_env			*ft_export(t_simple_cmds *cmd, t_env *n_envp);
-int				ft_unset(t_simple_cmds *cmd);
+t_env			*ft_unset(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_env(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_exit(t_simple_cmds *cmd);
 

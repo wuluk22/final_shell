@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/31 12:39:29 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 16:58:24 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ static int	process_command(char *line, t_env **n_envp)
 		else if (ft_strncmp(cmd_list->str[0], "export", 6) == 0)
 		{
 			*n_envp = ft_export(cmd_list, *n_envp);
+			return (0);
+		}
+		else if (ft_strncmp(cmd_list->str[0], "unset", 5) == 0)
+		{
+			*n_envp = ft_unset(cmd_list, *n_envp);
 			return (0);
 		}
 		else
