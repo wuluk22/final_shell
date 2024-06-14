@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/01 15:29:39 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:02:02 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,52 +71,47 @@ static char	*replace_env_variable(char *expanded_arg, char *dollar_pos)
 	return (temp);
 }
 
-static char *expand_variable(const char *arg)
+static char	*expand_variable(const char *arg)
 {
-    char *expanded_arg;
-    char *dollar_pos;
-    bool single_quote = false;
+	char	*expanded_arg;
+	char	*dollar_pos;
+	bool	single_quote;
 
-    expanded_arg = ft_strdup(arg);
-    if (!expanded_arg)
-    {
-        perror("strdup");
-        exit(EXIT_FAILURE);
-    }
-    dollar_pos = strchr(expanded_arg, '$');
-    while (dollar_pos)
-    {
-        char *quote_pos = dollar_pos - 1;
-        while (quote_pos >= expanded_arg && *quote_pos == '\'')
-        {
-            if (*quote_pos == '\'')
-            {
-                single_quote = true;
-            }
-            quote_pos--;
-        }
-
-        if (single_quote == false)
-        {
-            char *replacement;
-            if (*(dollar_pos + 1) == '?')
-                replacement = replace_exit_status(expanded_arg);
-            else
-                replacement = replace_env_variable(expanded_arg, dollar_pos);
-
-            if (!replacement)
-            {
-                free(expanded_arg);
-                return NULL;
-            }
-
-            expanded_arg = replacement;
-        }
-        dollar_pos = ft_strchr(dollar_pos + 1, '$');
-    }
-    return expanded_arg;
+	single_quote = false;
+	expanded_arg = ft_strdup(arg);
+	if (!expanded_arg)
+	{
+		perror("strdup");
+		exit(EXIT_FAILURE);
+	}
+	dollar_pos = strchr(expanded_arg, '$');
+	while (dollar_pos)
+	{
+		char	*quote_pos = dollar_pos - 1;
+		while (quote_pos >= expanded_arg && *quote_pos == '\'')
+		{
+			if (*quote_pos == '\'')
+				single_quote = true;
+			quote_pos--;
+		}
+		if (single_quote == false)
+		{
+			char	*replacement;
+			if (*(dollar_pos + 1) == '?')
+				replacement = replace_exit_status(expanded_arg);
+			else
+				replacement = replace_env_variable(expanded_arg, dollar_pos)
+			if (!replacement)
+			{
+				free(expanded_arg);
+				return (NULL);
+			}
+			expanded_arg = replacement;
+		}
+		dollar_pos = ft_strchr(dollar_pos + 1, '$');
+	}
+	return (expanded_arg);
 }
-
 
 int	expander(t_simple_cmds *cmd_list)
 {

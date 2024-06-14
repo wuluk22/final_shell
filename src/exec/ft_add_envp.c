@@ -90,22 +90,22 @@ t_env	*ft_init_envp(char **envp, t_env *n_envp)
 		}
 		i++;
 		if (envp[i])
-        {
-            n_envp->next = malloc(sizeof(t_env));
-            if (!n_envp->next)
-                return (NULL);
-            n_envp = n_envp->next;
-        }
+		{
+			n_envp->next = malloc(sizeof(t_env));
+			if (!n_envp->next)
+				return (NULL);
+			n_envp = n_envp->next;
+		}
 		j = 0;
 		free(temp);
 	}
 	n_envp = head;
-	/*while (n_envp->next != NULL)
+/*while (n_envp->next != NULL)
 	{
 		printf("--key:%s    --val:%s\n", n_envp->key, n_envp->value);
 		if (n_envp->next)
 			n_envp = n_envp->next;
-	}*/
+}*/
 	//write(2, "yi\n", 3);
 	return (n_envp);
 }
