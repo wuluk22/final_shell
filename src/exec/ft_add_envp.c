@@ -7,11 +7,23 @@ char	**ft_transform(t_env *n_envp)
 	//char	*temp2;
 	t_env	*head;
 	int		i;
+	int		count;
 
 	i = 0;
+	count = 0;
 	str = NULL;
 	head = n_envp;
-	str = malloc(8000000 * sizeof(char *));
+	while (n_envp)
+	{
+		count++;
+		if (n_envp->next == NULL)
+			break ;
+		n_envp = n_envp->next;
+	}
+	n_envp = head;
+	str = malloc((count + 1) * sizeof(char *));
+	if (!str)
+		return (NULL);
 	//write(2, "yo\n", 3);
 	while (n_envp->next != NULL)
 	{
@@ -68,6 +80,8 @@ t_env	*ft_init_envp(char **envp, t_env *n_envp)
 		else
 		{
 			n_envp->value = ft_strdup(temp[1]);
+			if (!n_envp->value)
+				return (NULL);
 		}
 		n_envp->next = NULL;
 		while (temp[j])

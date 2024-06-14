@@ -82,6 +82,11 @@ static int	process_command(char *line, t_env **n_envp)
 			*n_envp = ft_export(cmd_list, *n_envp);
 			return (0);
 		}
+		else if (ft_strncmp(cmd_list->str[0], "cd", 2) == 0)
+		{
+			*n_envp = ft_cd(cmd_list, *n_envp);
+			return (0);
+		}
 		else
 			command_executer(cmd_list->str, cmd_list, n_envp);
 	}

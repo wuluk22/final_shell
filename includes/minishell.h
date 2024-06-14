@@ -214,7 +214,7 @@ void			child_free(t_pipex *pipex);
 int				check_built_ins(char **str);
 void			launch_b(char **str, t_simple_cmds *cmd, t_env **n_envp);
 int				ft_echo(t_simple_cmds *cmd);
-int				ft_cd(t_simple_cmds *cmd);
+t_env			*ft_cd(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_pwd(t_simple_cmds *cmd);
 t_env			*ft_export(t_simple_cmds *cmd, t_env *n_envp);
 int				ft_unset(t_simple_cmds *cmd);
