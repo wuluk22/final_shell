@@ -227,8 +227,6 @@ int		ft_b_ins(t_cmds *cmd_list, t_lexer *lexer_list, t_env **n_envp);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-char	*ft_strcpy(char *dest, char *src);
-char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);

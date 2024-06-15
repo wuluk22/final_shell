@@ -55,8 +55,10 @@ static void	ft_free_envp(t_env *n_envp)
     while (current != NULL)
 	{
         next = current->next;
-        free(current->key);
-        free(current->value);
+		if (current->key)
+        	free(current->key);
+		if (current->value)
+        	free(current->value);
         free(current);
         current = next;
     }

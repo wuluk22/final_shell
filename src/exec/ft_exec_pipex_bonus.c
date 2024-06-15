@@ -86,15 +86,6 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 		ft_process(cmd, n_envp, nb, argc);
 		exit(EXIT_SUCCESS);
 	}
-	if (cmd->p_fd_input[0] != -1)
-		ft_close(&cmd->p_fd_input[0]);
-	if (cmd->p_fd_input[1] != -1)
-		ft_close(&cmd->p_fd_output[1]);
-	if (nb < argc)
-    {
-        ft_close(&cmd->p_fd_output[1]);
-        cmd->p_fd_output[0] = -1;  // Avoid using uninitialized value
-    }
 	//ft_close(&cmd->p_fd_input[0]);
 	//ft_close(&cmd->p_fd_output[1]);
 	if (cmd->next)

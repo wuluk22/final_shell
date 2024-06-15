@@ -21,5 +21,5 @@ void	ft_error(void)
 void	ft_close(int *fd)
 {
 	close(*fd);
-	//*fd = -1;
+	*fd = -1;
 }
