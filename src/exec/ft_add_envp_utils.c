@@ -18,6 +18,7 @@ static char	*ft_handle_ls_colors(char **temp)
 	int		k;
 
 	k = 1;
+	value = NULL;
 	value = ft_strdup(temp[k]);
 	k++;
 	while (temp[k])

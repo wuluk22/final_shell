@@ -25,6 +25,22 @@ void	ft_cleanup_cmd_list(t_cmds *cmd_list)
 		cmd_list = cmd_list->next;
 		free(temp);
 	}
+	free(cmd_list);
+}
+
+static void	ft_free_envp(t_env *n_envp)
+{
+    t_env *current = n_envp;
+    t_env *next;
+
+    while (current != NULL)
+	{
+        next = current->next;
+        free(current->key);
+        free(current->value);
+        free(current);
+        current = next;
+    }
 }
 
 static int	ft_process_command(t_env **n_envp, char *line)
@@ -34,6 +50,23 @@ static int	ft_process_command(t_env **n_envp, char *line)
 
 	lexer_list = NULL;
 	cmd_list = NULL;
+	/*lexer_list = malloc(sizeof(t_lexer));
+	cmd_list = malloc(sizeof(t_cmds));
+	cmd_list->str = NULL;
+	cmd_list->builton = NULL;
+	cmd_list->num_redirections = 0;
+	cmd_list->p_fd_input[0] = 0;
+	cmd_list->p_fd_input[1] = 0;
+	cmd_list->p_fd_output[0] = 0;
+	cmd_list->p_fd_output[1] = 0;
+	cmd_list->pid = 0;
+	cmd_list->hd_file_name = NULL;
+	cmd_list->redirections = NULL;
+	cmd_list->next = NULL;
+	cmd_list->prev = NULL;
+	cmd_list->envp = NULL;
+	cmd_list->exit = 0;*/
+
 	if (!line)
 	{
 		perror("error reading command");
@@ -54,9 +87,19 @@ void	minishell_loop(char **envp, char *line)
 {
 	t_env	*n_envp;
 
-	n_envp = malloc(sizeof(t_env *));
+	n_envp = NULL;
+	n_envp = malloc(sizeof(t_env));
+	if (!n_envp)
+	{
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
+	}
+	n_envp->key = NULL;
+	n_envp->value = NULL;
+	n_envp->next = NULL;
+	n_envp->env = NULL;
 	n_envp = ft_init_envp(n_envp, envp);
-	ft_transform(n_envp);
+	//ft_transform(n_envp);
 	while (1)
 	{
 		ft_set_input_signals();
@@ -72,6 +115,7 @@ void	minishell_loop(char **envp, char *line)
 		if (line)
 			free(line);
 	}
+	ft_free_envp(n_envp);
 }
 
 int	main(int argc, char **argv, char **envp)

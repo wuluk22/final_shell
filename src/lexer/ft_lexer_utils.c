@@ -22,8 +22,8 @@ void	ft_free_list(t_lexer *list)
 		list = list->next;
 		free(temp->token);
 		free(temp);
-		free(list);
 	}
+	free(list);
 }
 
 void	ft_print_list(t_lexer *list)
