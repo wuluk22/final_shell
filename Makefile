@@ -58,7 +58,7 @@ TOT_FIL	= $(words $(SRC))
 all:    $(NAME)
 
 $(NAME): $(OBJ) $(LIB_LIB)
-		@$(COMP) -fsanitize=address -g3 $(OBJ) -o $(NAME) $(LIB_LIB) $(RDL_LIB)
+		@$(COMP) $(OBJ) -o $(NAME) $(LIB_LIB) $(RDL_LIB)
 		@echo "$(GREEN)Compilation completed.$(STOP)"
 
 %.o: %.c

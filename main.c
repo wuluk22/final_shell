@@ -28,6 +28,25 @@ void	ft_cleanup_cmd_list(t_cmds *cmd_list)
 	free(cmd_list);
 }
 
+t_cmds *ft_create_cmd_node()
+{
+    t_cmds *cmd = malloc(sizeof(t_cmds));
+    if (!cmd)
+        return NULL;
+    
+    cmd->p_fd_input[0] = -1;
+    cmd->p_fd_input[1] = -1;
+    cmd->p_fd_output[0] = -1;
+    cmd->p_fd_output[1] = -1;
+    // Initialize other fields as necessary
+    cmd->redirections = NULL;
+    cmd->next = NULL;
+    cmd->str = NULL;
+    
+    return cmd;
+}
+
+
 static void	ft_free_envp(t_env *n_envp)
 {
     t_env *current = n_envp;
@@ -67,6 +86,10 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	cmd_list->envp = NULL;
 	cmd_list->exit = 0;*/
 
+	/*cmd_list->p_fd_input[0] = 0;
+	cmd_list->p_fd_input[1] = 0;
+	cmd_list->p_fd_output[0] = 0;
+	cmd_list->p_fd_output[1] = 0;*/
 	if (!line)
 	{
 		perror("error reading command");
