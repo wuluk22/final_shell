@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_quotes(char crt_char, bool *in_quotes, char *crt_quote)
+void	ft_handle_quotes(char crt_char, char *crt_quote, bool *in_quotes)
 {
 	if (crt_char == DOUBLE_QUOTE || crt_char == SINGLE_QUOTE)
 	{
@@ -29,42 +29,42 @@ void	handle_quotes(char crt_char, bool *in_quotes, char *crt_quote)
 	}
 }
 
-void	hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts)
+void	ft_hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts)
 {
 	if (!*in_qts)
 	{
-		if (strncmp(*crt, "<<", 2) == 0)
-			handle_dbl_less(list, t_start, crt);
-		else if (strncmp(*crt, ">>", 2) == 0)
-			handle_dbl_greater(list, t_start, crt);
+		if (ft_strncmp(*crt, "<<", 2) == 0)
+			ft_handle_dbl_less(list, t_start, crt);
+		else if (ft_strncmp(*crt, ">>", 2) == 0)
+			ft_handle_dbl_greater(list, t_start, crt);
 		else if (**crt == '<')
-			handle_less(list, t_start, crt);
+			ft_handle_less(list, t_start, crt);
 		else if (**crt == '>')
-			handle_greater(list, t_start, crt);
+			ft_handle_greater(list, t_start, crt);
 		else if (**crt == '|')
-			handle_pipe(list, t_start, crt);
+			ft_handle_pipe(list, t_start, crt);
 	}
 }
 
-void	tokenize(char *cmd, t_lexer **list)
+void	ft_tokenize(t_lexer **list, char *cmd)
 {
 	char	*token_start;
 	char	*current;
-	bool	in_quotes;
 	char	current_quote;
+	bool	in_quotes;
 
 	token_start = cmd;
 	current = cmd;
-	in_quotes = false;
 	current_quote = '\0';
+	in_quotes = false;
 	while (*current != '\0')
 	{
-		handle_quotes(*current, &in_quotes, &current_quote);
-		hdl_m(list, &token_start, &current, &in_quotes);
+		ft_handle_quotes(*current, &current_quote, &in_quotes);
+		ft_hdl_m(list, &token_start, &current, &in_quotes);
 		if (!in_quotes && *current == ' ' && current != token_start)
-			add_crt_token(list, &token_start, current);
+			ft_add_crt_token(list, &token_start, current);
 		current++;
 	}
 	if (current != token_start)
-		add_token(list, token_start);
+		ft_add_token(list, token_start);
 }

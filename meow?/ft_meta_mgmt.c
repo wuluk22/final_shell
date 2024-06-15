@@ -24,7 +24,7 @@ int	ft_meta_str(char c)
 		return (0);
 }
 
-int	list_parkour_str(char *list)
+int	ft_list_parkour_str(char *list)
 {
 	int	i;
 	int	j;
@@ -50,7 +50,7 @@ int	list_parkour_str(char *list)
 	return (i);
 }
 
-static int	process_lexer_list(t_lexer *list, char **args)
+static int	ft_process_lexer_list(t_lexer *list, char **args)
 {
 	int	arg_count;
 
@@ -79,10 +79,10 @@ void	ft_meta_mgmt(char *cmd, char **envp)
 	char	*args[100];
 
 	list = NULL;
-	tokenize(cmd, &list);
-	if (list_parkour(list) >= 1)
+	ft_tokenize(cmd, &list);
+	if (ft_list_parkour(list) >= 1)
 	{
-		process_lexer_list(list, args);
+		ft_process_lexer_list(list, args);
 		ft_first_iter(args, envp);
 	}
 }

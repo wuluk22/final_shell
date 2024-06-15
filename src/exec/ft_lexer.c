@@ -12,14 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-static char	*duplicate_path(const char *path)
+static char	*ft_duplicate_path(const char *path)
 {
 	if (path == NULL)
 		return (NULL);
-	return (strdup(path));
+	return (ft_strdup(path));
 }
 
-static size_t	token_length(const char *token)
+static size_t	ft_token_length(const char *token)
 {
 	size_t	len;
 
@@ -29,16 +29,16 @@ static size_t	token_length(const char *token)
 	return (len);
 }
 
-static int	check_access(const char *token, const char *command)
+static int	ft_check_access(const char *token, const char *command)
 {
 	size_t	command_len;
 	size_t	token_len;
 	char	*full_path;
 
-	command_len = strlen(command);
+	command_len = ft_strlen(command);
 	while (*token != '\0')
 	{
-		token_len = token_length(token);
+		token_len = ft_token_length(token);
 		full_path = malloc(token_len + command_len + 2);
 		if (!full_path)
 			return (0);
@@ -54,7 +54,7 @@ static int	check_access(const char *token, const char *command)
 	return (0);
 }
 
-static int	is_command_valid(const char *command)
+static int	ft_is_command_valid(const char *command)
 {
 	char	*path;
 	char	*path_copy;
@@ -62,11 +62,11 @@ static int	is_command_valid(const char *command)
 	int		result;
 
 	path = getenv("PATH");
-	path_copy = duplicate_path(path);
+	path_copy = ft_duplicate_path(path);
 	if (path_copy == NULL)
 		return (0);
 	token = path_copy;
-	result = check_access(token, command);
+	result = ft_check_access(token, command);
 	free(path_copy);
 	return (result);
 }
@@ -78,10 +78,10 @@ t_pipex	ft_dispatch(t_pipex exec, char *arg)
 	args = ft_split(arg, ' ');
 	if (arg)
 	{
-		if (is_command_valid(args[0]))
+		if (ft_is_command_valid(args[0]))
 		{
 			exec.cmd_args = &args[0];
-			exec.cmd = parsing(exec.cmd_paths, *exec.cmd_args);
+			exec.cmd = ft_parsing(exec.cmd_paths, *exec.cmd_args);
 		}
 	}
 	return (exec);

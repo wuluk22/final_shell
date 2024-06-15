@@ -14,15 +14,15 @@
 
 int	ft_meta(char *c)
 {
-	if (strcmp(c, "|") == 0)
+	if (ft_strncmp(c, "|", 1) == 0)
 		return (1);
-	if (strcmp(c, "<") == 0)
+	if (ft_strncmp(c, "<", 1) == 0)
 		return (2);
-	if (strcmp(c, ">") == 0)
+	if (ft_strncmp(c, ">", 1) == 0)
 		return (3);
-	if (strcmp(c, "<<") == 0)
+	if (ft_strncmp(c, "<<", 2) == 0)
 		return (4);
-	if (strcmp(c, ">>") == 0)
+	if (ft_strncmp(c, ">>", 2) == 0)
 		return (5);
 	else
 		return (0);
@@ -63,7 +63,7 @@ int	ft_meta(char *c)
 		wait(&status);
 }*/
 
-int	list_parkour(t_lexer *list)
+int	ft_list_parkour(t_lexer *list)
 {
 	t_lexer	*head;
 	int		i;
@@ -86,7 +86,7 @@ int	list_parkour(t_lexer *list)
 	il faut encore update les infos a leur envoyer
 */
 
-void	ft_first_iter(char *args[], char *envp[])
+/*void	ft_first_iter(char *args[], char *envp[])
 {
 	if (ft_meta(args[1]) == 2)
 		ft_input(args, envp);
@@ -96,7 +96,7 @@ void	ft_first_iter(char *args[], char *envp[])
 		ft_heredoc(args, envp);
 	else if (ft_meta(args[1]) == 5)
 		ft_append(args, envp);
-}
+}*/
 
 int	ft_stacklen(t_lexer *list)
 {
@@ -111,23 +111,12 @@ int	ft_stacklen(t_lexer *list)
 	return (i);
 }
 
-/*
-	
-	-le premier if va dans le multi_pipe si
-	il y a plus d'un element dans la liste
-	( du coup si il y a au moins un pipe )
-
-	-le else execute directement les commandes 
-	simples comme "ls -la" ou "cat Makefile"
-
-*/
-
-void	command_executer(char **args, t_simple_cmds *list, t_env **n_envp)
+void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args)
 {
-	int				i;
-	t_simple_cmds	*head;
+	int		i;
+	t_cmds	*head;
 
-	head = malloc(sizeof(t_simple_cmds));
+	head = malloc(sizeof(t_cmds));
 	head = NULL;
 	i = 0;
 	(void)args;
@@ -143,6 +132,6 @@ void	command_executer(char **args, t_simple_cmds *list, t_env **n_envp)
 			i++;
 		}
 		list = head;
-		ft_multi_pipe(i, list, n_envp);
+		ft_multi_pipe(list, n_envp, i);
 	}
 }

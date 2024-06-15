@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static char	*replace_exit_status(char *expanded_arg)
+char	*ft_replace_exit_status(char *expanded_arg)
 {
 	char	*exit_status_str;
 	char	*temp;
@@ -23,7 +23,7 @@ static char	*replace_exit_status(char *expanded_arg)
 		perror("itoa fail");
 		exit(EXIT_FAILURE);
 	}
-	temp = replace_substr(expanded_arg, "$?", exit_status_str);
+	temp = ft_replace_substr(expanded_arg, "$?", exit_status_str);
 	free(expanded_arg);
 	if (!temp)
 	{
@@ -35,16 +35,14 @@ static char	*replace_exit_status(char *expanded_arg)
 	return (temp);
 }
 
-static char	*replace_env_variable(char *expanded_arg, char *dollar_pos)
+static char	*ft_extract_env_var_name(char *dollar_pos)
 {
 	char	*end_var;
-	int		var_len;
 	char	*var_name;
-	char	*var_value;
-	char	*temp;
+	int		var_len;
 
 	end_var = dollar_pos + 1;
-	while (*end_var && (isalnum(*end_var) || *end_var == '_'))
+	while (*end_var && (ft_isalnum(*end_var) || *end_var == '_'))
 		end_var++;
 	var_len = end_var - (dollar_pos + 1);
 	var_name = strndup(dollar_pos + 1, var_len);
@@ -53,15 +51,24 @@ static char	*replace_env_variable(char *expanded_arg, char *dollar_pos)
 		perror("strndup");
 		exit(EXIT_FAILURE);
 	}
-	var_value = get_env_value(var_name);
+	return (var_name);
+}
+
+static char	*ft_env_var_substitution(char *expanded_arg, char *dollar_pos)
+{
+	char	*var_name;
+	char	*var_value;
+	char	*temp;
+
+	var_name = ft_extract_env_var_name(dollar_pos);
+	var_value = ft_get_env_value(var_name);
 	free(var_name);
 	if (!var_value)
 	{
-		//ft_putstr_fd("env var not found\n", STDERR_FILENO);
+		ft_putstr_fd("env var not found\n", STDERR_FILENO);
 		return (NULL);
 	}
-	temp = replace_substr(expanded_arg, dollar_pos, var_value);
-	//free(expanded_arg);
+	temp = ft_replace_substr(expanded_arg, dollar_pos, var_value);
 	if (!temp)
 	{
 		perror("replace substr");
@@ -71,53 +78,20 @@ static char	*replace_env_variable(char *expanded_arg, char *dollar_pos)
 	return (temp);
 }
 
-static char	*expand_variable(const char *arg)
+char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos)
 {
-	char	*expanded_arg;
-	char	*dollar_pos;
-	bool	single_quote;
+	char	*temp;
 
-	single_quote = false;
-	expanded_arg = ft_strdup(arg);
-	if (!expanded_arg)
-	{
-		perror("strdup");
-		exit(EXIT_FAILURE);
-	}
-	dollar_pos = strchr(expanded_arg, '$');
-	while (dollar_pos)
-	{
-		char	*quote_pos = dollar_pos - 1;
-		while (quote_pos >= expanded_arg && *quote_pos == '\'')
-		{
-			if (*quote_pos == '\'')
-				single_quote = true;
-			quote_pos--;
-		}
-		if (single_quote == false)
-		{
-			char	*replacement;
-			if (*(dollar_pos + 1) == '?')
-				replacement = replace_exit_status(expanded_arg);
-			else
-				replacement = replace_env_variable(expanded_arg, dollar_pos);
-			if (!replacement)
-			{
-				free(expanded_arg);
-				return (NULL);
-			}
-			expanded_arg = replacement;
-		}
-		dollar_pos = ft_strchr(dollar_pos + 1, '$');
-	}
-	return (expanded_arg);
+	temp = ft_env_var_substitution(expanded_arg, dollar_pos);
+//free(expanded_arg);
+	return (temp);
 }
 
-int	expander(t_simple_cmds *cmd_list)
+int	ft_expander(t_cmds *cmd_list)
 {
-	t_simple_cmds	*list;
-	int				i;
-	char			*expanded_str;
+	t_cmds	*list;
+	int		i;
+	char	*expanded_str;
 
 	list = cmd_list;
 	while (list)
@@ -125,7 +99,7 @@ int	expander(t_simple_cmds *cmd_list)
 		i = 0;
 		while (list->str[i])
 		{
-			expanded_str = expand_variable(list->str[i]);
+			expanded_str = ft_expand_variable(list->str[i]);
 			if (!expanded_str)
 			{
 				//ft_putstr_fd("Error-$\n", STDERR_FILENO);
@@ -140,3 +114,82 @@ int	expander(t_simple_cmds *cmd_list)
 	}
 	return (EXIT_SUCCESS);
 }
+
+/*static char	*ft_expand_variable(const char *arg)
+{
+	char	*expanded_arg;
+	char	*dollar_pos;
+	char	*quote_pos;
+	bool	single_quote;
+
+	single_quote = false;
+	expanded_arg = ft_strdup(arg);
+	if (!expanded_arg)
+	{
+		perror("strdup");
+		exit(EXIT_FAILURE);
+	}
+	dollar_pos = ft_strchr(expanded_arg, '$');
+	while (dollar_pos)
+	{
+		quote_pos = dollar_pos - 1;
+		while (quote_pos >= expanded_arg && *quote_pos == '\'')
+		{
+			if (*quote_pos == '\'')
+				single_quote = true;
+			quote_pos--;
+		}
+		if (single_quote == false)
+		{
+			char	*replacement;
+			if (*(dollar_pos + 1) == '?')
+				replacement = ft_replace_exit_status(expanded_arg);
+			else
+				replacement = ft_replace_env_variable(expanded_arg, dollar_pos);
+			if (!replacement)
+			{
+				free(expanded_arg);
+				return (NULL);
+			}
+			expanded_arg = replacement;
+		}
+		dollar_pos = ft_strchr(dollar_pos + 1, '$');
+	}
+	return (expanded_arg);
+}
+
+char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos)
+{
+	char	*end_var;
+	int		var_len;
+	char	*var_name;
+	char	*var_value;
+	char	*temp;
+
+	end_var = dollar_pos + 1;
+	while (*end_var && (ft_isalnum(*end_var) || *end_var == '_'))
+		end_var++;
+	var_len = end_var - (dollar_pos + 1);
+	var_name = strndup(dollar_pos + 1, var_len);
+	if (!var_name)
+	{
+		perror("strndup");
+		exit(EXIT_FAILURE);
+	}
+	var_value = ft_get_env_value(var_name);
+	free(var_name);
+	if (!var_value)
+	{
+		ft_putstr_fd("env var not found\n", STDERR_FILENO);
+		return (NULL);
+	}
+	temp = ft_replace_substr(expanded_arg, dollar_pos, var_value);
+	//free(expanded_arg);
+	if (!temp)
+	{
+		perror("replace substr");
+		free(var_value);
+		exit(EXIT_FAILURE);
+	}
+	return (temp);
+}*/

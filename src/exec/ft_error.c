@@ -12,8 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-void	error(void)
+void	ft_error(void)
 {
 	perror("\033[31mError");
 	exit(EXIT_FAILURE);
+}
+
+void	ft_close(int *fd)
+{
+	close(*fd);
+	*fd = -1;
 }

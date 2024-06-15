@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_redirect_token(t_lexer **tokens, t_lexer **redirections,
+void	ft_handle_redirect_token(t_lexer **tokens, t_lexer **redirections,
 		t_lexer **current, t_lexer **prev)
 {
 	t_lexer	*next_token;
@@ -38,7 +38,7 @@ void	handle_redirect_token(t_lexer **tokens, t_lexer **redirections,
 	}
 }
 
-void	parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections)
+void	ft_parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections)
 {
 	t_lexer	*current;
 	t_lexer	*prev;
@@ -48,10 +48,10 @@ void	parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections)
 	while (current != NULL && ft_strncmp(current->token, "|", 1) != 0)
 	{
 		ft_strtrim(current->token, " ");
-		if (is_redirection_token(current->token) == 0)
-			handle_redirect_token(tokens, redirections, &current, &prev);
-		else if (is_redirection_token(current->token) == 1)
-			handle_redirect_token(tokens, redirections, &current, &prev);
+		if (ft_is_redirection_token(current->token) == 0)
+			ft_handle_redirect_token(tokens, redirections, &current, &prev);
+		else if (ft_is_redirection_token(current->token) == 1)
+			ft_handle_redirect_token(tokens, redirections, &current, &prev);
 		else
 		{
 			prev = current;
@@ -60,8 +60,8 @@ void	parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections)
 	}
 }
 
-void	parse_redirections(t_lexer **tokens, t_lexer **redirections)
+void	ft_parse_redirections(t_lexer **tokens, t_lexer **redirections)
 {
-	parse_redirect_tokens(tokens, redirections);
-	reverse_redirections_list(redirections);
+	ft_parse_redirect_tokens(tokens, redirections);
+	ft_reverse_redirections_list(redirections);
 }

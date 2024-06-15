@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-char	*get_env_value(const char *var_name)
+char	*ft_get_env_value(const char *var_name)
 {
 	return (getenv(var_name));
 }
 
-int	count_occurrences(const char *str, const char *old_substr)
+int	ft_count_occurrences(const char *str, const char *old_substr)
 {
 	int			count;
 	int			oldlen;
 	const char	*temp;
 
 	count = 0;
-	oldlen = strlen(old_substr);
+	oldlen = ft_strlen(old_substr);
 	temp = str;
 	while (1)
 	{
@@ -37,7 +37,7 @@ int	count_occurrences(const char *str, const char *old_substr)
 	return (count);
 }
 
-void	delete_quotes(char *str, char c)
+void	ft_delete_quotes(char *str, char c)
 {
 	int	i;
 	int	j;
@@ -53,17 +53,17 @@ void	delete_quotes(char *str, char c)
 	str[j] = '\0';
 }
 
-char	*allocate_result(char *str, char *old_substr, char *new_substr)
+char	*ft_allocate_result(char *str, char *old_substr, char *new_substr)
 {
 	int		count;
 	int		newlen;
 	int		oldlen;
 	char	*result;
 
-	count = count_occurrences(str, old_substr);
-	newlen = strlen(new_substr);
-	oldlen = strlen(old_substr);
-	result = (char *)malloc(strlen(str) + count * (newlen - oldlen) + 1);
+	count = ft_count_occurrences(str, old_substr);
+	newlen = ft_strlen(new_substr);
+	oldlen = ft_strlen(old_substr);
+	result = (char *)malloc(ft_strlen(str) + count * (newlen - oldlen) + 1);
 	if (!result)
 	{
 		perror("malloc");
@@ -72,17 +72,17 @@ char	*allocate_result(char *str, char *old_substr, char *new_substr)
 	return (result);
 }
 
-char	*replace_substr(char *str, char *old_substr, char *new_substr)
+char	*ft_replace_substr(char *str, char *old_substr, char *new_substr)
 {
 	char	*result;
 	int		i;
 	int		oldlen;
 	int		newlen;
 
-	result = allocate_result(str, old_substr, new_substr);
+	result = ft_allocate_result(str, old_substr, new_substr);
 	i = 0;
-	oldlen = strlen(old_substr);
-	newlen = strlen(new_substr);
+	oldlen = ft_strlen(old_substr);
+	newlen = ft_strlen(new_substr);
 	while (*str)
 	{
 		if (strstr(str, old_substr) == str)

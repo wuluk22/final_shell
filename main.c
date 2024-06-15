@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#define MEOW "\033[5m<-\033[0;35m(-x _ x-) \033[1;3;5;45mmini\033[1;3;5;37;45mshell\033[0;5m->\033[0m "
 
-static void	cleanup_cmd_list(t_simple_cmds *cmd_list)
+void	ft_cleanup_cmd_list(t_cmds *cmd_list)
 {
-	t_simple_cmds	*temp;
+	t_cmds	*temp;
 
 	while (cmd_list)
 	{
@@ -26,10 +27,10 @@ static void	cleanup_cmd_list(t_simple_cmds *cmd_list)
 	}
 }
 
-static int	process_command(char *line, t_env **n_envp)
+static int	ft_process_command(t_env **n_envp, char *line)
 {
-	t_lexer			*lexer_list;
-	t_simple_cmds	*cmd_list;
+	t_lexer	*lexer_list;
+	t_cmds	*cmd_list;
 
 	lexer_list = NULL;
 	cmd_list = NULL;
@@ -38,59 +39,32 @@ static int	process_command(char *line, t_env **n_envp)
 		perror("error reading command");
 		return (0);
 	}
-	tokenize(line, &lexer_list);
-	lexer_to_cmds(&lexer_list, &cmd_list);
+	ft_tokenize(&lexer_list, line);
+	ft_lexer_to_cmds(&cmd_list, &lexer_list);
 	if (cmd_list)
-		expander(cmd_list);
-	if (cmd_list && cmd_list->str)
-	{
-		if (ft_strncmp(cmd_list->str[0], "exit", 4) == 0)
-		{
-			if (ft_exit(cmd_list) != 1)
-			{
-				cleanup_cmd_list(cmd_list);
-				free_list(lexer_list);
-				return (1);
-			}
-		}
-		else if (ft_strncmp(cmd_list->str[0], "export", 6) == 0)
-		{
-			*n_envp = ft_export(cmd_list, *n_envp);
-			return (0);
-		}
-		else if (ft_strncmp(cmd_list->str[0], "unset", 5) == 0)
-		{
-			*n_envp = ft_unset(cmd_list, *n_envp);
-			return (0);
-		}
-		else if (ft_strncmp(cmd_list->str[0], "cd", 2) == 0)
-		{
-			*n_envp = ft_cd(cmd_list, *n_envp);
-			return (0);
-		}
-		else
-			command_executer(cmd_list->str, cmd_list, n_envp);
-	}
-	cleanup_cmd_list(cmd_list);
-	free_list(lexer_list);
+		ft_expander(cmd_list);
+	if (ft_b_ins(cmd_list, lexer_list, n_envp) == 1)
+		return (1);
+	ft_cleanup_cmd_list(cmd_list);
+	ft_free_list(lexer_list);
 	return (0);
 }
 
-void	minishell_loop(char *line, char **envp)
+void	minishell_loop(char **envp, char *line)
 {
 	t_env	*n_envp;
 
 	n_envp = malloc(sizeof(t_env *));
-	n_envp = ft_init_envp(envp, n_envp);
+	n_envp = ft_init_envp(n_envp, envp);
 	ft_transform(n_envp);
 	while (1)
 	{
 		ft_set_input_signals();
-		line = readline("\033[5m<-\033[0;35m(-x _ x-) \033[1;3;5;45mmini\033[1;3;5;37;45mshell\033[0;5m->\033[0m ");
+		line = readline(MEOW);
 		if (!line)
 			break ;
 		add_history(line);
-		if (process_command(line, &n_envp))
+		if (ft_process_command(&n_envp, line))
 		{
 			free(line);
 			break ;
@@ -108,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	line = malloc(sizeof(char *));
 	line = NULL;
-	minishell_loop(line, envp);
+	minishell_loop(envp, line);
 	return (EXIT_SUCCESS);
 }
 //system("leaks ./minishell");

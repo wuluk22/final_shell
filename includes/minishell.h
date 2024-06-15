@@ -104,7 +104,8 @@ typedef struct s_pipex
 	char	*cmd;
 }	t_pipex;
 
-typedef struct s_env {
+typedef struct s_env
+{
 	//int				export;
 	char			*key;
 	char			*value;
@@ -112,123 +113,125 @@ typedef struct s_env {
 	char			**env;
 }	t_env;
 
-typedef struct	s_tools
+typedef struct s_cmds
 {
-
-}	t_tools;
-
-typedef struct s_simple_cmds
-{
-	char					**str;
-	int						(*builtin)(t_tools *, struct s_simple_cmds *);
-	char					*builton;
-	int						num_redirections;
-	int						p_fd_input[2];
-	int						p_fd_output[2];
-	pid_t					pid;
-	char					*hd_file_name;
-	t_lexer					*redirections;
-	struct s_simple_cmds	*next;
-	struct s_simple_cmds	*prev;
-	t_env					*envp;
-	int						exit;
-}	t_simple_cmds;
+	char			**str;
+	char			*builton;
+	int				num_redirections;
+	int				p_fd_input[2];
+	int				p_fd_output[2];
+	pid_t			pid;
+	char			*hd_file_name;
+	t_lexer			*redirections;
+	struct s_cmds	*next;
+	struct s_cmds	*prev;
+	t_env			*envp;
+	int				exit;
+}	t_cmds;
 
 //main
-void			minishell_loop(char *line, char **envp);
-char			*trim(char *str);
+void	minishell_loop(char **envp, char *line);
+char	*ft_trim(char *str);
 
 //signals
-void			ft_signal_handler(int sign);
-void			ft_set_input_signals(void);
+void	ft_signal_handler(int sign);
+void	ft_set_input_signals(void);
 
 //exec
-void			error(void);
-void			ft_append(char *args[], char *envp[]);
-int				ft_meta(char *c);
-int				list_parkour(t_lexer *list);
-void			ft_first_iter(char *args[], char *envp[]);
-int				ft_stacklen(t_lexer *list);
-void			command_executer(char **args, t_simple_cmds *list, t_env **n_envp);
-void			ft_heredoc(char *args[], char *envp[]);
-void			ft_input(char *args[], char *envp[]);
-char			*find_path(char **envp, t_pipex *pipex);
-char			*parsing(char **cmd_paths, char *cmd_args);
-void			ft_multi_pipe(int argc, t_simple_cmds *list, t_env **n_envp);
-void			open_file(int fd, t_simple_cmds *cmd, int sv_stdin, int nb);
-void			here_txt(char *limiter, t_simple_cmds *cmd, int fd);
-char			*get_path(char *cmd, char **envp);
-char			*ft_strnstr(const char *find, const char *to_find, size_t len);
-void			ft_redir(char *args[], char *envp[]);
-void			parent_free(t_pipex *pipex);
-void			child_free(t_pipex *pipex);
-t_pipex			ft_dispatch(t_pipex exec, char *arg);
-int				ft_meta_str(char c);
-int				list_parkour_str(char *list);
-void			ft_meta_mgmt(char *cmd, char **envp);
-t_env			*ft_init_envp(char **envp, t_env *n_envp);
-char			**ft_transform(t_env *n_envp);
+void	ft_error(void);
+void	ft_close(int *fd);
+char	*ft_free_tab(char **tabs);
+void	ft_append(char *args[], char *envp[]);
+int		ft_meta(char *c);
+int		ft_list_parkour(t_lexer *list);
+void	ft_first_iter(char *args[], char *envp[]);
+int		ft_stacklen(t_lexer *list);
+void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args);
+void	ft_heredoc(char *args[], char *envp[]);
+void	ft_input(char *args[], char *envp[]);
+char	*ft_parsing(char **cmd_paths, char *cmd_args);
+void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc);
+void	ft_open_file(t_cmds *cmd, int sv_stdin, int fd, int nb);
+void	ft_here_txt(t_cmds *cmd, char *limiter, int fd);
+char	*ft_get_path(char **envp, char *cmd);
+char	*ft_strnstr(const char *find, const char *to_find, size_t len);
+void	ft_redir(char *args[], char *envp[]);
+void	ft_parent_free(t_pipex *pipex);
+void	ft_child_free(t_pipex *pipex);
+t_pipex	ft_ft_dispatch(t_pipex exec, char *arg);
+int		ft_meta_str(char c);
+int		ft_list_parkour_str(char *list);
+void	ft_meta_mgmt(char **envp, char *cmd);
+t_env	*ft_init_envp(t_env *n_envp, char **envp);
+char	**ft_transform(t_env *n_envp);
+void	ft_check(t_cmds *cmd, int fd, int sv_stdin);
+char	*ft_trim(char *str);
 
 //expand
-char			*get_env_value(const char *var_name);
-int				count_occurrences(const char *str, const char *old_substr);
-void			delete_quotes(char *str, char c);
-char			*allocate_result(char *str, char *old_substr, char *new_substr);
-char			*replace_substr(char *str, char *old_substr, char *new_substr);
-int				expander(t_simple_cmds *cmd_list);
+char	*ft_get_env_value(const char *var_name);
+int		ft_count_occurrences(const char *str, const char *old_substr);
+void	ft_delete_quotes(char *str, char c);
+char	*ft_allocate_result(char *str, char *old_substr, char *new_substr);
+char	*ft_replace_substr(char *str, char *old_substr, char *new_substr);
+int		ft_expander(t_cmds *cmd_list);
+char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos);
+char	*ft_expand_variable(const char *arg);
+char	*ft_replace_exit_status(char *expanded_arg);
 
 //lexer
-void			free_list(t_lexer *list);
-void			print_list(t_lexer *list);
-void			add_token(t_lexer **list, char *token);
-void			add_crt_token(t_lexer **list, char **tok_start, char *current);
-void			handle_quotes(char crt_char, bool *in_quotes, char *crt_quote);
-void			hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts);
-void			tokenize(char *cmd, t_lexer **list);
-void			handle_dbl_greater(t_lexer **list, char **t_start, char **crt);
-void			handle_dbl_less(t_lexer **list, char **t_start, char **crt);
-void			handle_greater(t_lexer **list, char **t_start, char **current);
-void			handle_less(t_lexer **list, char **token_start, char **current);
-void			handle_pipe(t_lexer **list, char **token_start, char **current);
+void	ft_free_list(t_lexer *list);
+void	ft_print_list(t_lexer *list);
+void	ft_add_token(t_lexer **list, char *token);
+void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current);
+void	ft_handle_quotes(char crt_char, char *crt_quote, bool *in_quotes);
+void	ft_hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts);
+void	ft_tokenize(t_lexer **list, char *cmd);
+void	ft_handle_dbl_greater(t_lexer **list, char **t_start, char **crt);
+void	ft_handle_dbl_less(t_lexer **list, char **t_start, char **crt);
+void	ft_handle_greater(t_lexer **list, char **t_start, char **current);
+void	ft_handle_less(t_lexer **list, char **token_start, char **current);
+void	ft_handle_pipe(t_lexer **list, char **token_start, char **current);
 
 //parser
-void			parser(t_lexer *list, t_parser *pars);
-void			lexer_to_cmds(t_lexer **tokens, t_simple_cmds **cmd_list);
-void			free_cmds(t_simple_cmds *cmds);
-bool			is_builtin(char *command);
-int				is_redirection_token(const char *token);
-void			reverse_redirections_list(t_lexer **redirections);
-t_simple_cmds	*create_simple_cmd_node(void);
-void			add_spl_cmd(t_simple_cmds **cmd_list, t_simple_cmds *new_node);
-void			handle_redirect_token(t_lexer **tokens, t_lexer **redirections,
-					t_lexer **current, t_lexer **prev);
-void			parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections);
-void			parse_redirections(t_lexer **tokens, t_lexer **redirections);
-void			parse_command(t_lexer **tokens, t_simple_cmds **cmd_list);
-char			*find_path(char **envp, t_pipex *pipex);
-char			*parsing(char **cmd_paths, char *cmd_args);
-void			parent_free(t_pipex *pipex);
-void			child_free(t_pipex *pipex);
+void	ft_parser(t_parser *pars, t_lexer *list);
+void	ft_lexer_to_cmds(t_cmds **cmd_list, t_lexer **tokens);
+void	ft_free_cmds(t_cmds *cmds);
+bool	ft_is_builtin(char *command);
+int		ft_is_redirection_token(const char *token);
+void	ft_reverse_redirections_list(t_lexer **redirections);
+t_cmds	*ft_create_simple_cmd_node(void);
+void	ft_add_spl_cmd(t_cmds **cmd_list, t_cmds *new_node);
+void	ft_handle_redirect_token(t_lexer **tokens, t_lexer **redirections,
+			t_lexer **current, t_lexer **prev);
+void	ft_parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections);
+void	ft_parse_redirections(t_lexer **tokens, t_lexer **redirections);
+void	ft_parse_command(t_cmds **cmd_list, t_lexer **tokens);
+char	*ft_find_path(t_pipex *pipex, char **envp);
+char	*ft_parsing(char **cmd_paths, char *cmd_args);
+void	ft_parent_free(t_pipex *pipex);
+void	ft_child_free(t_pipex *pipex);
 
 //built_ins
-int				check_built_ins(char **str);
-void			launch_b(char **str, t_simple_cmds *cmd, t_env **n_envp);
-int				ft_echo(t_simple_cmds *cmd);
-t_env			*ft_cd(t_simple_cmds *cmd, t_env *n_envp);
-int				ft_pwd(t_simple_cmds *cmd);
-t_env			*ft_export(t_simple_cmds *cmd, t_env *n_envp);
-t_env			*ft_unset(t_simple_cmds *cmd, t_env *n_envp);
-int				ft_env(t_simple_cmds *cmd, t_env *n_envp);
-int				ft_exit(t_simple_cmds *cmd);
+int		ft_check_built_ins(char **str);
+void	ft_launch_b(t_cmds *cmd, t_env **n_envp, char **str);
+int		ft_echo(t_cmds *cmd);
+t_env	*ft_cd(t_cmds *cmd, t_env *n_envp);
+int		ft_pwd(t_cmds *cmd);
+t_env	*ft_export(t_cmds *cmd, t_env *n_envp);
+t_env	*ft_unset(t_cmds *cmd, t_env *n_envp);
+int		ft_env(t_cmds *cmd, t_env *n_envp);
+int		ft_exit(t_cmds *cmd);
+int		ft_b_ins(t_cmds *cmd_list, t_lexer *lexer_list, t_env **n_envp);
 
 //utils
-void			ft_putchar_fd(char c, int fd);
-void			ft_putstr_fd(char *s, int fd);
-void			ft_putendl_fd(char *s, int fd);
-char			*ft_strcpy(char *dest, char *src);
-char			*ft_strdup(const char *s1);
-size_t			ft_strlen(const char *s);
-char			*ft_substr(char const *s, unsigned int start, size_t len);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+char	*ft_strcpy(char *dest, char *src);
+char	*ft_strdup(const char *s1);
+size_t	ft_strlen(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	ft_cleanup_cmd_list(t_cmds *cmd_list);
 
 #endif

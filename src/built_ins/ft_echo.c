@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static void	output(int i, char **str, int fd, int newline)
+static void	ft_output(int i, char **str, int fd, int newline)
 {
 	while (str[i])
 	{
@@ -25,11 +25,13 @@ static void	output(int i, char **str, int fd, int newline)
 		write(fd, "\n", 1);
 }
 
-char	*trim_quotes(char* str)
+char	*ft_trim_quotes(char *str)
 {
+	size_t	len;
+
 	if (str == NULL || *str == '\0')
 		return (str);
-	size_t	len = strlen(str);
+	len = ft_strlen(str);
 	while (len > 0 && (str[0] == '\'' || str[0] == '"'))
 	{
 		str++;
@@ -40,12 +42,14 @@ char	*trim_quotes(char* str)
 	return (str);
 }
 
-int	ft_echo(t_simple_cmds *cmd)
+int	ft_echo(t_cmds *cmd)
 {
 	int	i;
+	int	j;
 	int	newline;
 
 	i = 1;
+	j = 0;
 	newline = 0;
 	if (cmd->str[i] && ft_strncmp(cmd->str[i], "-n", 2) == 0)
 	{
@@ -57,13 +61,12 @@ int	ft_echo(t_simple_cmds *cmd)
 		write(1, "$", 1);
 		return (EXIT_SUCCESS);
 	}
-	int	j = 0;
 	while (cmd->str[j])
 	{
-		cmd->str[j] = trim_quotes(cmd->str[j]);	
-		cmd->str[j] = trim(cmd->str[j]);
+		cmd->str[j] = ft_trim_quotes(cmd->str[j]);
+		cmd->str[j] = ft_trim(cmd->str[j]);
 		j++;
 	}
-	output(i, cmd->str, STDOUT_FILENO, newline);
+	ft_output(i, cmd->str, STDOUT_FILENO, newline);
 	return (EXIT_SUCCESS);
 }

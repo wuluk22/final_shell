@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	*find_path(char **envp, t_pipex *pipex)
+char	*ft_find_path(t_pipex *pipex, char **envp)
 {
 	int		i;
 	int		flag;
@@ -27,7 +27,7 @@ char	*find_path(char **envp, t_pipex *pipex)
 	}
 	if (flag == 0)
 	{
-		error();
+		ft_error();
 		close(pipex->tube[0]);
 		close(pipex->tube[1]);
 		close(pipex->infile);
@@ -39,7 +39,7 @@ char	*find_path(char **envp, t_pipex *pipex)
 	return (*envp + 5);
 }
 
-char	*parsing(char **cmd_paths, char *cmd_args)
+char	*ft_parsing(char **cmd_paths, char *cmd_args)
 {
 	char	*temp;
 	char	*cmd;

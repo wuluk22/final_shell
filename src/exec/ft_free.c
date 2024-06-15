@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	parent_free(t_pipex *pipex)
+void	ft_parent_free(t_pipex *pipex)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ void	parent_free(t_pipex *pipex)
 	free(pipex->cmd_paths);
 }
 
-void	child_free(t_pipex *pipex)
+void	ft_child_free(t_pipex *pipex)
 {
 	int	i;
 

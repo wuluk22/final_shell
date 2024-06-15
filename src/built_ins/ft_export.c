@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static t_env	*ft_add_envp(t_env **n_envp, char **args)
+/*static t_env	*ft_add_envp(t_env **n_envp, char **args)
 {
 	t_env	*head;
 	t_env	*current;
@@ -42,9 +42,55 @@ static t_env	*ft_add_envp(t_env **n_envp, char **args)
 	if (head)
 		new_node->next = head;
 	return (new_node);
+}*/
+
+static t_env	*ft_find_and_update_envp(t_env *head, char **args)
+{
+	t_env	*current;
+
+	current = head;
+	while (current)
+	{
+		if (ft_strncmp(current->key, args[0], ft_strlen(args[0])) == 0)
+		{
+			free(current->value);
+			current->value = ft_strdup(args[1]);
+			return (head);
+		}
+		current = current->next;
+	}
+	return (NULL);
 }
 
-t_env	*ft_export(t_simple_cmds *cmd, t_env *n_envp)
+static t_env	*ft_create_new_node(char **args)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->key = ft_strdup(args[0]);
+	new_node->value = ft_strdup(args[1]);
+	new_node->next = NULL;
+	return (new_node);
+}
+
+static t_env	*ft_add_envp(t_env **n_envp, char **args)
+{
+	t_env	*head;
+	t_env	*new_node;
+
+	head = *n_envp;
+	if (ft_find_and_update_envp(head, args))
+		return (head);
+	new_node = ft_create_new_node(args);
+	if (!new_node)
+		return (NULL);
+	new_node->next = head;
+	return (new_node);
+}
+
+t_env	*ft_export(t_cmds *cmd, t_env *n_envp)
 {
 	char	**args;
 

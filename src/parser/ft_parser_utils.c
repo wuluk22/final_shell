@@ -12,25 +12,26 @@
 
 #include "../../includes/minishell.h"
 
-bool	is_builtin(char *command)
+bool	ft_is_builtin(char *command)
 {
-	if (strcmp(command, "echo") == 0 || strcmp(command, "cd") == 0)
+	if (ft_strncmp(command, "echo", 4) == 0
+		|| ft_strncmp(command, "cd", 2) == 0)
 		return (true);
 	return (false);
 }
 
-int	is_redirection_token(const char *token)
+int	ft_is_redirection_token(const char *token)
 {
-	if (strcmp(token, "<") == 0 || strcmp(token, ">") == 0
-		|| strcmp(token, ">>") == 0)
+	if (ft_strncmp(token, "<", 1) == 0 || ft_strncmp(token, ">", 1) == 0
+		|| ft_strncmp(token, ">>", 2) == 0)
 		return (0);
-	else if (strcmp(token, "<<") == 0)
+	else if (ft_strncmp(token, "<<", 2) == 0)
 		return (1);
 	else
 		return (2);
 }
 
-void	reverse_redirections_list(t_lexer **redirections)
+void	ft_reverse_redirections_list(t_lexer **redirections)
 {
 	t_lexer	*prev_redir;
 	t_lexer	*temp;
@@ -47,18 +48,17 @@ void	reverse_redirections_list(t_lexer **redirections)
 	*redirections = prev_redir;
 }
 
-t_simple_cmds	*create_simple_cmd_node(void)
+t_cmds	*ft_create_simple_cmd_node(void)
 {
-	t_simple_cmds	*new_node;
+	t_cmds	*new_node;
 
-	new_node = malloc(sizeof(t_simple_cmds));
+	new_node = malloc(sizeof(t_cmds));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Memory allocation error\n");
 		exit(EXIT_FAILURE);
 	}
 	new_node->str = NULL;
-	new_node->builtin = NULL;
 	new_node->num_redirections = 0;
 	new_node->pid = 6;
 	new_node->hd_file_name = NULL;
@@ -68,9 +68,9 @@ t_simple_cmds	*create_simple_cmd_node(void)
 	return (new_node);
 }
 
-void	add_spl_cmd(t_simple_cmds **cmd_list, t_simple_cmds *new_node)
+void	ft_add_spl_cmd(t_cmds **cmd_list, t_cmds *new_node)
 {
-	t_simple_cmds	*current;
+	t_cmds	*current;
 
 	if (*cmd_list == NULL)
 		*cmd_list = new_node;

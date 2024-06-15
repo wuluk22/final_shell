@@ -12,22 +12,22 @@
 
 #include "../../includes/minishell.h"
 
-void	lexer_to_cmds(t_lexer **tokens, t_simple_cmds **cmd_list)
+void	ft_lexer_to_cmds(t_cmds **cmd_list, t_lexer **tokens)
 {
 	while (*tokens != NULL)
-		parse_command(tokens, cmd_list);
+		ft_parse_command(cmd_list, tokens);
 }
 
-void	free_cmds(t_simple_cmds *cmds)
+void	ft_free_cmds(t_cmds *cmds)
 {
-	t_simple_cmds	*temp;
+	t_cmds	*temp;
 
 	while (cmds != NULL)
 	{
 		temp = cmds;
 		cmds = cmds->next;
 		free(temp->str);
-		free_list(temp->redirections);
+		ft_free_list(temp->redirections);
 		free(temp);
 	}
 }

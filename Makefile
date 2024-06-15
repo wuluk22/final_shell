@@ -20,20 +20,19 @@ SRC     = src/lexer/ft_str_utils.c\
 			src/ft_signals.c\
 			utils/get_next_line/ft_get_next_line.c\
 			utils/get_next_line/ft_get_next_line_utils.c\
-			src/exec/ft_exec_append.c\
 			src/exec/ft_exec_exec.c\
-			src/exec/ft_exec_heredoc.c\
-			src/exec/ft_exec_input_red.c\
 			src/exec/ft_exec_pipex_bonus.c\
 			src/exec/ft_exec_pipex_utls_bonus.c\
-			src/exec/ft_exec_redirect.c\
+			src/exec/ft_exec_pipex_utls.c\
 			src/exec/ft_exec_parsing.c\
 			src/exec/ft_error.c\
 			src/exec/ft_free.c\
 			src/exec/ft_lexer.c\
-			src/exec/ft_meta_mgmt.c\
 			src/exec/ft_add_envp.c\
+			src/exec/ft_add_envp_utils.c\
+			src/exec/ft_exec_utils.c\
 			src/expander/ft_expander.c\
+			src/expander/ft_expander_utls.c\
 			src/expander/ft_expander_utils.c\
 			src/built_ins/ft_cd.c\
 			src/built_ins/ft_echo.c\

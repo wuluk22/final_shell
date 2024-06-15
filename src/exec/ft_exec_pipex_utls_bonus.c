@@ -12,16 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-void	here_txt(char *limiter, t_simple_cmds *cmd, int fd)
+void	ft_here_txt(t_cmds *cmd, char *limiter, int fd)
 {
 	char	*line;
+
 	(void)cmd;
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 			exit(EXIT_FAILURE);
-		if (!ft_strncmp(line, trim(limiter), ft_strlen(trim(limiter))))
+		if (!ft_strncmp(line, ft_trim(limiter), ft_strlen(ft_trim(limiter))))
 		{
 			free(line);
 			break ;
@@ -33,7 +34,7 @@ void	here_txt(char *limiter, t_simple_cmds *cmd, int fd)
 	//unlink(".fd_Yann.txt");
 }
 
-static char	*ft_free_tab(char **tabs)
+char	*ft_free_tab(char **tabs)
 {
 	size_t	i;
 
@@ -47,13 +48,14 @@ static char	*ft_free_tab(char **tabs)
 	return (NULL);
 }
 
-char	*get_path(char *cmd, char **envp)
+/*char	*ft_get_path(char **envp, char *cmd)
 {
 	char	**paths;
 	char	*path_cmd;
 	char	*full_paths;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	if (!access(cmd, X_OK))
 	{
 		return (cmd);
@@ -76,7 +78,7 @@ char	*get_path(char *cmd, char **envp)
 			free(full_paths);
 	}
 	return (ft_free_tab(paths));
-}
+}*/
 
 char	*ft_strnstr(const char *find, const char *to_find, size_t len)
 {

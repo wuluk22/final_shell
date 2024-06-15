@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	free_list(t_lexer *list)
+void	ft_free_list(t_lexer *list)
 {
 	t_lexer	*temp;
 
@@ -26,7 +26,7 @@ void	free_list(t_lexer *list)
 	}
 }
 
-void	print_list(t_lexer *list)
+void	ft_print_list(t_lexer *list)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ void	print_list(t_lexer *list)
 	}
 }
 
-void	add_token(t_lexer **list, char *token)
+void	ft_add_token(t_lexer **list, char *token)
 {
 	t_lexer	*new_token;
 	t_lexer	*current;
@@ -50,7 +50,7 @@ void	add_token(t_lexer **list, char *token)
 		fprintf(stderr, "Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
-	new_token->token = strdup(token);
+	new_token->token = ft_strdup(token);
 	new_token->next = NULL;
 	if (*list == NULL)
 		*list = new_token;
@@ -63,10 +63,10 @@ void	add_token(t_lexer **list, char *token)
 	}
 }
 
-void	add_crt_token(t_lexer **list, char **tok_start, char *current)
+void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current)
 {
 	*current = '\0';
 	ft_strtrim(*tok_start, " ");
-	add_token(list, *tok_start);
+	ft_add_token(list, *tok_start);
 	*tok_start = current + 1;
 }
