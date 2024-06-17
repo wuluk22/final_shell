@@ -42,12 +42,15 @@ void	ft_parse_redirect_tokens(t_lexer **tokens, t_lexer **redirections)
 {
 	t_lexer	*current;
 	t_lexer	*prev;
+	char	*trimmed;
 
 	current = *tokens;
 	prev = NULL;
 	while (current != NULL && ft_strncmp(current->token, "|", 1) != 0)
 	{
-		ft_strtrim(current->token, " ");
+		trimmed = ft_strtrim(current->token, " ");
+		free(current->token);
+		current->token = trimmed;
 		if (ft_is_redirection_token(current->token) == 0)
 			ft_handle_redirect_token(tokens, redirections, &current, &prev);
 		else if (ft_is_redirection_token(current->token) == 1)

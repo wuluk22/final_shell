@@ -9,7 +9,6 @@ endef
 
 NAME    = minishell
 SRC     = src/lexer/ft_str_utils.c\
-			src/lexer/ft_str_utils_s.c\
 			src/lexer/ft_lexer.c\
 			src/lexer/ft_lexer_utils.c\
 			src/lexer/ft_token_cases.c\

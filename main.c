@@ -20,12 +20,14 @@ void	ft_cleanup_cmd_list(t_cmds *cmd_list)
 	while (cmd_list)
 	{
 		if (cmd_list->str)
-			free(cmd_list->str);
+			ft_free_array(cmd_list->str);
+		if (cmd_list->redirections)
+			free(cmd_list->redirections);
 		temp = cmd_list;
 		cmd_list = cmd_list->next;
 		free(temp);
 	}
-	free(cmd_list);
+	//free(cmd_list);
 }
 
 t_cmds *ft_create_cmd_node()
@@ -43,7 +45,7 @@ t_cmds *ft_create_cmd_node()
     cmd->next = NULL;
     cmd->str = NULL;
     
-    return cmd;
+    return (cmd);
 }
 
 
@@ -102,7 +104,11 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	if (cmd_list)
 		ft_expander(cmd_list);
 	if (ft_b_ins(cmd_list, lexer_list, n_envp) == 1)
+	{
+		ft_cleanup_cmd_list(cmd_list);
+		ft_free_list(lexer_list);
 		return (1);
+	}
 	ft_cleanup_cmd_list(cmd_list);
 	ft_free_list(lexer_list);
 	return (0);
@@ -149,7 +155,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	line = malloc(sizeof(char *));
+	line = malloc(sizeof(char));
 	line = NULL;
 	minishell_loop(envp, line);
 	return (EXIT_SUCCESS);

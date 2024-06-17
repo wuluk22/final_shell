@@ -140,6 +140,7 @@ void	ft_set_input_signals(void);
 //exec
 void	ft_error(void);
 void	ft_close(int *fd);
+void	ft_free_array(char **array);
 char	*ft_free_tab(char **tabs);
 void	ft_append(char *args[], char *envp[]);
 int		ft_meta(char *c);
@@ -181,7 +182,7 @@ char	*ft_replace_exit_status(char *expanded_arg);
 //lexer
 void	ft_free_list(t_lexer *list);
 void	ft_print_list(t_lexer *list);
-void	ft_add_token(t_lexer **list, char *token);
+void	ft_add_token(t_lexer **list, const char *token);
 void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current);
 void	ft_handle_quotes(char crt_char, char *crt_quote, bool *in_quotes);
 void	ft_hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts);
@@ -228,8 +229,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	ft_cleanup_cmd_list(t_cmds *cmd_list);
 
 #endif

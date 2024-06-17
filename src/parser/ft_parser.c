@@ -74,13 +74,16 @@ static int	ft_count_tokens(t_lexer *tokens)
 static void	ft_fill_command_strings(t_lexer **tokens, t_cmds *new_cmd)
 {
 	t_lexer	*current;
+	char	*trimmed;
 	int		i;
 
 	current = *tokens;
 	i = 0;
 	while (current != NULL && ft_strncmp(current->token, "|", 1) != 0)
 	{
-		ft_strtrim(current->token, " ");
+		trimmed = ft_strtrim(current->token, " ");
+		free(current->token);
+		current->token = trimmed;
 		new_cmd->str[i++] = current->token;
 		current = current->next;
 	}
@@ -101,8 +104,10 @@ void	ft_parse_command(t_cmds **cmd_list, t_lexer **tokens)
 	redirections = NULL;
 	new_cmd = ft_create_simple_cmd_node();
 	token_count = ft_count_tokens(current);
-	new_cmd->str = (char **)malloc(sizeof(char *) * (token_count + 1));
 	ft_parse_redirections(&cmd_start, &redirections);
+	if (new_cmd->str != NULL)
+		ft_free_array(new_cmd->str);
+	new_cmd->str = (char **)malloc(sizeof(char *) * (token_count + 1));
 	if (new_cmd->str == NULL)
 	{
 		fprintf(stderr, "Memory allocation error\n");

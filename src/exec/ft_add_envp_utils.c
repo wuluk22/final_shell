@@ -15,17 +15,24 @@
 static char	*ft_handle_ls_colors(char **temp)
 {
 	char	*value;
+	char	*tmp;
 	int		k;
 
 	k = 1;
-	value = NULL;
+	//value = NULL;
 	value = ft_strdup(temp[k]);
 	k++;
 	while (temp[k])
 	{
-		value = ft_strjoin(value, temp[k]);
+		tmp = value;
+		value = ft_strjoin(tmp, temp[k]);
+		free(tmp);
 		if (k < 12)
+		{
+			tmp = value;
 			value = ft_strjoin(value, "=");
+			free(tmp);
+		}
 		k++;
 	}
 	return (value);
@@ -52,7 +59,8 @@ static void	ft_free_temp_array(char **temp)
 	j = 0;
 	while (temp[j])
 	{
-		temp[j++] = NULL;
+		free(temp[j]);
+		j++;
 	}
 	free(temp);
 }
@@ -68,15 +76,28 @@ t_env	*ft_init_envp(t_env *n_envp, char **envp)
 	while (envp[i])
 	{
 		temp = ft_split(envp[i], '=');
+		if (!temp)
+			return (NULL);
 		n_envp->key = ft_strdup(temp[0]);
+		if (!n_envp->key)
+		{
+			ft_free_temp_array(temp);
+			return (NULL);
+		}
 		n_envp = ft_init_node(n_envp, temp);
 		if (!n_envp)
+		{
+			ft_free_temp_array(temp);
 			return (NULL);
+		}
 		if (envp[i + 1])
 		{
 			n_envp->next = malloc(sizeof(t_env));
 			if (!n_envp->next)
+			{
+				ft_free_temp_array(temp);
 				return (NULL);
+			}
 			n_envp = n_envp->next;
 		}
 		ft_free_temp_array(temp);
