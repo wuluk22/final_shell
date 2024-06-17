@@ -67,13 +67,11 @@ char	*ft_get_path(char **envp, char *cmd)
 	char	*path_env;
 	char	*path_cmd;
 	char	*direct_access;
-	int		i;
 
 	paths = NULL;
 	path_env = NULL;
 	path_cmd = NULL;
 	direct_access = ft_check_direct_access(cmd);
-	i = 0;
 	if (direct_access)
 		return (direct_access);
 	path_env = ft_find_path_env(envp);

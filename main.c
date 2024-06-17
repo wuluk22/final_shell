@@ -155,7 +155,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	line = malloc(sizeof(char));
+	//line = malloc(sizeof(char));
 	line = NULL;
 	minishell_loop(envp, line);
 	return (EXIT_SUCCESS);
