@@ -6,46 +6,13 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 16:51:34 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:36:57 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #define MEOW "\033[5m<-\033[0;35m(-x _ x-)"
 #define MIAO " \033[1;3;5;45mmini\033[1;3;5;37;45mshell\033[0;5m->\033[0m "
-
-void	ft_cleanup_cmd_list(t_cmds *cmd_list)
-{
-	t_cmds	*temp;
-
-	while (cmd_list)
-	{
-		if (cmd_list->str)
-			ft_free_array(cmd_list->str);
-		if (cmd_list->redirections)
-			free(cmd_list->redirections);
-		temp = cmd_list;
-		cmd_list = cmd_list->next;
-		free(temp);
-	}
-}
-
-t_cmds	*ft_create_cmd_node(void)
-{
-	t_cmds	*cmd;
-
-	cmd = malloc(sizeof(t_cmds));
-	if (!cmd)
-		return (NULL);
-	cmd->p_fd_input[0] = -1;
-	cmd->p_fd_input[1] = -1;
-	cmd->p_fd_output[0] = -1;
-	cmd->p_fd_output[1] = -1;
-	cmd->redirections = NULL;
-	cmd->next = NULL;
-	cmd->str = NULL;
-	return (cmd);
-}
 
 static void	ft_free_envp(t_env *n_envp)
 {
@@ -92,22 +59,8 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	return (0);
 }
 
-void	minishell_loop(char **envp, char *line)
+static void	minishell_loop(char **envp, char *line)
 {
-	t_env	*n_envp;
-
-	n_envp = NULL;
-	n_envp = malloc(sizeof(t_env));
-	if (!n_envp)
-	{
-		perror("malloc failed");
-		exit(EXIT_FAILURE);
-	}
-	n_envp->key = NULL;
-	n_envp->value = NULL;
-	n_envp->next = NULL;
-	n_envp->env = NULL;
-	n_envp = ft_init_envp(n_envp, envp);
 	while (1)
 	{
 		ft_set_input_signals();
@@ -129,10 +82,25 @@ void	minishell_loop(char **envp, char *line)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	t_env	*n_envp;
+	t_env	*head;
 
+	head = NULL;
+	n_envp = NULL;
+	n_envp = malloc(sizeof(t_env));
+	if (!n_envp)
+	{
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
+	}
+	n_envp->key = NULL;
+	n_envp->value = NULL;
+	n_envp->next = NULL;
+	n_envp->env = NULL;
+	n_envp = ft_init_envp(n_envp, head, envp, -1);
 	(void)argc;
 	(void)argv;
 	line = NULL;
-	minishell_loop(envp, line);
+	minishell_loop(envp, line, n_envp);
 	return (EXIT_SUCCESS);
 }

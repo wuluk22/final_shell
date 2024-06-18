@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 10:59:31 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 16:34:12 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:44:32 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,43 +64,29 @@ static void	ft_free_temp_array(char **temp)
 	free(temp);
 }
 
-t_env	*ft_init_envp(t_env *n_envp, char **envp)
+t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i)
 {
-	t_env	*head;
 	char	**temp;
-	int		i;
 
 	head = n_envp;
-	i = 0;
-	while (envp[i])
+	while (envp[++i])
 	{
 		temp = ft_split(envp[i], '=');
 		if (!temp)
 			return (NULL);
 		n_envp->key = ft_strdup(temp[0]);
-		if (!n_envp->key)
-		{
-			ft_free_temp_array(temp);
-			return (NULL);
-		}
 		n_envp = ft_init_node(n_envp, temp);
-		if (!n_envp)
-		{
-			ft_free_temp_array(temp);
-			return (NULL);
-		}
 		if (envp[i + 1])
 		{
 			n_envp->next = malloc(sizeof(t_env));
-			if (!n_envp->next)
-			{
-				ft_free_temp_array(temp);
-				return (NULL);
-			}
 			n_envp = n_envp->next;
 		}
+		if (!n_envp || !n_envp->key || !n_envp->next)
+		{
+			ft_free_temp_array(temp);
+			return (NULL);
+		}
 		ft_free_temp_array(temp);
-		i++;
 	}
 	return (head);
 }

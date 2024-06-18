@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 16:00:18 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:38:38 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ typedef struct s_cmds
 }	t_cmds;
 
 //main
-void	minishell_loop(char **envp, char *line);
 char	*ft_trim(char *str);
 
 //signals
@@ -163,7 +162,7 @@ t_pipex	ft_ft_dispatch(t_pipex exec, char *arg);
 int		ft_meta_str(char c);
 int		ft_list_parkour_str(char *list);
 void	ft_meta_mgmt(char **envp, char *cmd);
-t_env	*ft_init_envp(t_env *n_envp, char **envp);
+t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i);
 char	**ft_transform(t_env *n_envp);
 void	ft_check(t_cmds *cmd, int fd, int sv_stdin);
 char	*ft_trim(char *str);
