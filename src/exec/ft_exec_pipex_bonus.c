@@ -41,12 +41,15 @@ static void	ft_handle_process(t_cmds *cmd, int nb, int argc)
 	{
 		dup2(cmd->p_fd_input[0], 0);
 		close(cmd->p_fd_input[0]);
+		close(cmd->p_fd_input[1]);
+		write(2, "-f-\n", 4);
 	}
 	if (nb < argc)
 	{
 		dup2(cmd->p_fd_output[1], 1);
 		close(cmd->p_fd_output[0]);
 		close(cmd->p_fd_output[1]);
+		write(2, "-g-\n", 4);
 	}
 	if (cmd->redirections)
 		ft_check(cmd, fd, sv_stdin);
@@ -72,18 +75,29 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 	if (!cmd)
 		return (0);
 	if (nb < argc)
+	{
 		if (pipe(cmd->p_fd_output) == -1)
 		{
 			if (cmd->p_fd_input[0] != -1)
+			{
 				ft_close(&cmd->p_fd_input[0]);
+				ft_close(&cmd->p_fd_input[1]);
+				write(2, "-a-\n", 4);
+			}
 			exit(EXIT_FAILURE);
 		}
+	}
 	pid = fork();
 	if (pid == -1)
+	{
+		write(2, "-b-\n", 4);
 		exit(EXIT_FAILURE);
+	}
 	if (pid == 0)
 	{
+		write(2, "-c-\n", 4);
 		ft_process(cmd, n_envp, nb, argc);
+		write(2, "-d-\n", 4);
 		exit(EXIT_SUCCESS);
 	}
 	//ft_close(&cmd->p_fd_input[0]);
@@ -93,12 +107,25 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 	//if (cmd->p_fd_output[1] != -1)
 	else
 	{
+		//if (cmd->p_fd_input[0] != -1)
+			//ft_close(&cmd->p_fd_input[0]);
+		//if (cmd->p_fd_output[1] != -1)
 		//ft_close(&cmd->p_fd_output[1]); //en enlevant cette ligne le prompt ne se quitte pas mais il execute mal, en la laissant il execute bien mais il quitte
+		write(2, "-e-\n", 4);
+		if (cmd->p_fd_input[0] != -1)
+		{
+			close(cmd->p_fd_input[0]);
+			close(cmd->p_fd_input[1]);
+		}
+		/*if (cmd->p_fd_output[1] != -1)
+		{
+			close(cmd->p_fd_output[1]);
+		}*/
 		if (cmd->next)
 			ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
 				sizeof(cmd->p_fd_input));
 		cmd->p_fd_output[0] = -1;
-		waitpid(pid, NULL, 0);
+		//waitpid(pid, NULL, 0);
 	}
 	return (pid);
 }

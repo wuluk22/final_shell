@@ -132,6 +132,7 @@ void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args)
 			i++;
 		}
 		list = head;
+		printf("-%d-\n", i);
 		ft_multi_pipe(list, n_envp, i);
 	}
 }
