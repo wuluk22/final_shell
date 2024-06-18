@@ -82,6 +82,8 @@ static void	ft_fill_command_strings(t_lexer **tokens, t_cmds *new_cmd)
 	while (current != NULL && ft_strncmp(current->token, "|", 1) != 0)
 	{
 		trimmed = ft_strtrim(current->token, " ");
+		if (ft_strncmp(trimmed, "\"", 1) == 0)
+			trimmed = ft_strtrim(trimmed, "\"");
 		free(current->token);
 		current->token = trimmed;
 		new_cmd->str[i++] = current->token;

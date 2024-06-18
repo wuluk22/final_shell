@@ -59,15 +59,18 @@ static char	*ft_env_var_substitution(char *expanded_arg, char *dollar_pos)
 	char	*var_name;
 	char	*var_value;
 	char	*temp;
+	char	*next_char;
 
+	next_char = dollar_pos + 1;
 	var_name = ft_extract_env_var_name(dollar_pos);
 	var_value = ft_get_env_value(var_name);
-	free(var_name);
 	if (!var_value)
 	{
-		ft_putstr_fd("env var not found\n", STDERR_FILENO);
+		if (*next_char == '\0')
+			ft_putchar_fd('$', STDOUT_FILENO);
 		return (NULL);
 	}
+	free(var_name);
 	temp = ft_replace_substr(expanded_arg, dollar_pos, var_value);
 	if (!temp)
 	{
