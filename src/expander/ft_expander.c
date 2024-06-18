@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:27:22 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 16:44:43 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos)
 	char	*temp;
 
 	temp = ft_env_var_substitution(expanded_arg, dollar_pos);
-//free(expanded_arg);
 	return (temp);
 }
 
@@ -105,7 +104,6 @@ int	ft_expander(t_cmds *cmd_list)
 			expanded_str = ft_expand_variable(list->str[i]);
 			if (!expanded_str)
 			{
-				//ft_putstr_fd("Error-$\n", STDERR_FILENO);
 				list->str[i] = NULL;
 				return (EXIT_FAILURE);
 			}

@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 10:59:31 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/15 10:59:33 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 16:34:12 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static char	*ft_handle_ls_colors(char **temp)
 	int		k;
 
 	k = 1;
-	//value = NULL;
 	value = ft_strdup(temp[k]);
 	k++;
 	while (temp[k])

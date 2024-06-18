@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:08:47 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/15 11:08:48 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 16:39:57 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_open_file(t_cmds *cmd, int sv_stdin, int fd, int nb)
 	if (nb == 3)
 		dup2(STDOUT_FILENO, 1);
 }
-
 
 void	ft_check(t_cmds *cmd, int fd, int sv_stdin)
 {

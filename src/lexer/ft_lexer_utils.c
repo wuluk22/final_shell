@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:56:50 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/14 16:02:05 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/18 16:43:58 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_free_list(t_lexer *list)
 		free(temp->token);
 		free(temp);
 	}
-	//free(list);
 }
 
 void	ft_print_list(t_lexer *list)
@@ -49,7 +48,7 @@ void	ft_add_token(t_lexer **list, const char *token)
 	{
 		free(trimmed_token);
 		fprintf(stderr, "Erreur d'allocation mémoire\n");
-		exit(EXIT_FAILURE);	
+		exit(EXIT_FAILURE);
 	}
 	new_token = (t_lexer *)malloc(sizeof(t_lexer));
 	if (new_token == NULL)
@@ -59,12 +58,10 @@ void	ft_add_token(t_lexer **list, const char *token)
 		fprintf(stderr, "Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
-	//new_token->token = NULL;
 	new_token->token = ft_strdup(trimmed_token);
 	free(trimmed_token);
 	if (new_token->token == NULL)
 	{
-		//free(new_token->token);
 		free(new_token);
 		exit(EXIT_FAILURE);
 	}
@@ -78,12 +75,12 @@ void	ft_add_token(t_lexer **list, const char *token)
 			current = current->next;
 		current->next = new_token;
 	}
-	//new_token->token = NULL;
 }
 
 void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current)
 {
 	char	*trimmed;
+
 	*current = '\0';
 	trimmed = ft_strtrim(*tok_start, " ");
 	if (trimmed == NULL)
