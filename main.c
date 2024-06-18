@@ -59,7 +59,7 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	return (0);
 }
 
-static void	minishell_loop(char **envp, char *line)
+static void	minishell_loop(t_env *n_envp, char *line)
 {
 	while (1)
 	{
@@ -101,6 +101,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	line = NULL;
-	minishell_loop(envp, line, n_envp);
+	minishell_loop(n_envp, line);
 	return (EXIT_SUCCESS);
 }

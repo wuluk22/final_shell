@@ -45,7 +45,7 @@ static char	*ft_extract_env_var_name(char *dollar_pos)
 	while (*end_var && (ft_isalnum(*end_var) || *end_var == '_'))
 		end_var++;
 	var_len = end_var - (dollar_pos + 1);
-	var_name = strndup(dollar_pos + 1, var_len);
+	var_name = ft_strdup(dollar_pos + 1);
 	if (!var_name)
 	{
 		perror("strndup");

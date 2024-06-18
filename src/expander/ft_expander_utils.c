@@ -28,7 +28,7 @@ int	ft_count_occurrences(const char *str, const char *old_substr)
 	temp = str;
 	while (1)
 	{
-		temp = strstr(temp, old_substr);
+		temp = ft_strnstr(temp, old_substr, ft_strlen(old_substr));
 		if (!temp)
 			break ;
 		count++;
@@ -85,7 +85,7 @@ char	*ft_replace_substr(char *str, char *old_substr, char *new_substr)
 	newlen = ft_strlen(new_substr);
 	while (*str)
 	{
-		if (strstr(str, old_substr) == str)
+		if (ft_strnstr(str, old_substr, ft_strlen(old_substr)) == str)
 		{
 			strcpy(&result[i], new_substr);
 			i += newlen;

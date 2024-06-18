@@ -47,7 +47,7 @@ void	ft_add_token(t_lexer **list, const char *token)
 	if (trimmed_token == NULL)
 	{
 		free(trimmed_token);
-		fprintf(stderr, "Erreur d'allocation mémoire\n");
+		printf("Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
 	new_token = (t_lexer *)malloc(sizeof(t_lexer));
@@ -55,7 +55,7 @@ void	ft_add_token(t_lexer **list, const char *token)
 	{
 		free(trimmed_token);
 		free(new_token);
-		fprintf(stderr, "Erreur d'allocation mémoire\n");
+		printf("Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
 	new_token->token = ft_strdup(trimmed_token);

@@ -55,7 +55,7 @@ t_cmds	*ft_create_simple_cmd_node(void)
 	new_node = malloc(sizeof(t_cmds));
 	if (new_node == NULL)
 	{
-		fprintf(stderr, "Memory allocation error\n");
+		printf("Memory allocation error\n");
 		exit(EXIT_FAILURE);
 	}
 	new_node->str = NULL;

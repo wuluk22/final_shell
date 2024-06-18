@@ -39,7 +39,8 @@ SRCS	= ft_strrchr.c\
 		  ft_atoi.c\
 		  ft_strdup.c\
 		  ft_substr.c\
-		  ft_putchar_fd.c 
+		  ft_putchar_fd.c\
+		  ft_isspace.c 
 OBJS	= ${SRCS:.c=.o}
 INCS	= includes
 NAME	= libft.a
