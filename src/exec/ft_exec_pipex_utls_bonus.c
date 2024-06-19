@@ -31,7 +31,7 @@ void	ft_here_txt(t_cmds *cmd, char *limiter, int fd)
 		ft_putchar_fd('\n', fd);
 		free(line);
 	}
-	unlink(".feuys.txt");
+	//unlink(".feuys.txt");
 }
 
 char	*ft_free_tab(char **tabs)
