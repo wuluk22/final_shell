@@ -37,34 +37,21 @@ void	ft_print_list(t_lexer *list)
 	}
 }
 
-void	ft_add_token(t_lexer **list, const char *token)
+void	ft_add_token(t_lexer **list, t_lexer *new_token, const char *token)
 {
-	t_lexer	*new_token;
 	t_lexer	*current;
 	char	*trimmed_token;
 
 	trimmed_token = ft_strtrim(token, " ");
-	if (trimmed_token == NULL)
-	{
-		free(trimmed_token);
-		printf("Erreur d'allocation mémoire\n");
-		exit(EXIT_FAILURE);
-	}
-	new_token = (t_lexer *)malloc(sizeof(t_lexer));
-	if (new_token == NULL)
-	{
-		free(trimmed_token);
-		free(new_token);
-		printf("Erreur d'allocation mémoire\n");
-		exit(EXIT_FAILURE);
-	}
 	new_token->token = ft_strdup(trimmed_token);
-	free(trimmed_token);
-	if (new_token->token == NULL)
+	if (new_token == NULL || trimmed_token == NULL || new_token->token == NULL)
 	{
+		free(trimmed_token);
 		free(new_token);
+		printf("Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
+	free(trimmed_token);
 	new_token->next = NULL;
 	if (*list == NULL)
 		*list = new_token;
@@ -79,15 +66,17 @@ void	ft_add_token(t_lexer **list, const char *token)
 
 void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current)
 {
+	t_lexer	*new_token;
 	char	*trimmed;
 
+	new_token = (t_lexer *)malloc(sizeof(t_lexer));
 	*current = '\0';
 	trimmed = ft_strtrim(*tok_start, " ");
 	if (trimmed == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
-	ft_add_token(list, trimmed);
+	ft_add_token(list, new_token, trimmed);
 	free(trimmed);
 	*tok_start = current + 1;
 }

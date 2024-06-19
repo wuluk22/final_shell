@@ -48,37 +48,19 @@ char	*ft_free_tab(char **tabs)
 	return (NULL);
 }
 
-/*char	*ft_get_path(char **envp, char *cmd)
+void	ft_parent(t_cmds *cmd, pid_t pid)
 {
-	char	**paths;
-	char	*path_cmd;
-	char	*full_paths;
-	int		i;
-
-	i = 0;
-	if (!access(cmd, X_OK))
+	if (cmd->p_fd_input[0] != -1)
 	{
-		return (cmd);
+		close(cmd->p_fd_input[0]);
+		close(cmd->p_fd_input[1]);
 	}
-	while (!ft_strnstr(envp[i], "PATH", 4))
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	if (!paths)
-		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		path_cmd = ft_strjoin(paths[i++], "/");
-		full_paths = ft_strjoin(path_cmd, ft_strtrim(cmd, " "));
-		if (!path_cmd)
-			free(path_cmd);
-		if (!access(full_paths, F_OK))
-			return (full_paths);
-		if (full_paths)
-			free(full_paths);
-	}
-	return (ft_free_tab(paths));
-}*/
+	if (cmd->next)
+		ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
+			sizeof(cmd->p_fd_input));
+	cmd->p_fd_output[0] = -1;
+	waitpid(pid, NULL, 0);
+}
 
 char	*ft_strnstr(const char *find, const char *to_find, size_t len)
 {

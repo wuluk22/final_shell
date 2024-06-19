@@ -166,6 +166,7 @@ t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i);
 char	**ft_transform(t_env *n_envp);
 void	ft_check(t_cmds *cmd, int fd, int sv_stdin);
 char	*ft_trim(char *str);
+void	ft_parent(t_cmds *cmd, pid_t pid);
 
 //expand
 char	*ft_get_env_value(const char *var_name);
@@ -181,7 +182,7 @@ char	*ft_replace_exit_status(char *expanded_arg);
 //lexer
 void	ft_free_list(t_lexer *list);
 void	ft_print_list(t_lexer *list);
-void	ft_add_token(t_lexer **list, const char *token);
+void	ft_add_token(t_lexer **list, t_lexer *new_token, const char *token);
 void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current);
 void	ft_handle_quotes(char crt_char, char *crt_quote, bool *in_quotes);
 void	ft_hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts);

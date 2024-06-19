@@ -48,11 +48,13 @@ void	ft_hdl_m(t_lexer **list, char **t_start, char **crt, bool *in_qts)
 
 void	ft_tokenize(t_lexer **list, char *cmd)
 {
+	t_lexer	*new_token;
 	char	*token_start;
 	char	*current;
 	char	current_quote;
 	bool	in_quotes;
 
+	new_token = (t_lexer *)malloc(sizeof(t_lexer));
 	token_start = cmd;
 	current = cmd;
 	current_quote = '\0';
@@ -66,5 +68,5 @@ void	ft_tokenize(t_lexer **list, char *cmd)
 		current++;
 	}
 	if (current != token_start)
-		ft_add_token(list, token_start);
+		ft_add_token(list, new_token, token_start);
 }

@@ -69,6 +69,7 @@ void	ft_process(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 	}
 	else if (ft_check_built_ins(cmd->str) == 1)
 		ft_exec(*n_envp, cmd->str);
+	exit(EXIT_SUCCESS);
 }
 
 static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
@@ -93,23 +94,9 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-	{
 		ft_process(cmd, n_envp, nb, argc);
-		exit(EXIT_SUCCESS);
-	}
 	else
-	{
-		if (cmd->p_fd_input[0] != -1)
-		{
-			close(cmd->p_fd_input[0]);
-			close(cmd->p_fd_input[1]);
-		}
-		if (cmd->next)
-			ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
-				sizeof(cmd->p_fd_input));
-		cmd->p_fd_output[0] = -1;
-		waitpid(pid, NULL, 0);
-	}
+		ft_parent(cmd, pid);
 	return (pid);
 }
 

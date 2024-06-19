@@ -93,6 +93,12 @@ static void	ft_fill_command_strings(t_lexer **tokens, t_cmds *new_cmd)
 	*tokens = current;
 }
 
+static void	ft_malloc_ex(void)
+{
+	printf("Memory allocation error\n");
+	exit(EXIT_FAILURE);
+}
+
 void	ft_parse_command(t_cmds **cmd_list, t_lexer **tokens)
 {
 	t_lexer	*current;
@@ -111,10 +117,7 @@ void	ft_parse_command(t_cmds **cmd_list, t_lexer **tokens)
 		ft_free_array(new_cmd->str);
 	new_cmd->str = (char **)malloc(sizeof(char *) * (token_count + 1));
 	if (new_cmd->str == NULL)
-	{
-		fprintf(stderr, "Memory allocation error\n");
-		exit(EXIT_FAILURE);
-	}
+		ft_malloc_ex();
 	ft_fill_command_strings(&current, new_cmd);
 	new_cmd->redirections = redirections;
 	ft_add_spl_cmd(cmd_list, new_cmd);

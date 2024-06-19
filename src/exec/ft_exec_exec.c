@@ -28,41 +28,6 @@ int	ft_meta(char *c)
 		return (0);
 }
 
-/*void	execute_command(char **envp, char **args)
-{
-	pid_t	pid;
-	int		status;
-	char	**arg;
-
-	if (list_parkour_str(args) >= 1)
-		ft_meta_mgmt(args, envp);
-	else
-	{
-
-	pid = fork();
-	(void)envp;
-	arg = args;
-	//printf("---%s\n", *arg);
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		while (arg)
-		{
-			if (execve(exec.cmd, arg, NULL) == -1)
-			{
-				perror("Error executing command");
-				exit(EXIT_FAILURE);
-			}
-		}
-	}
-	else
-		wait(&status);
-}*/
-
 int	ft_list_parkour(t_lexer *list)
 {
 	t_lexer	*head;
@@ -80,23 +45,6 @@ int	ft_list_parkour(t_lexer *list)
 	list = head;
 	return (i);
 }
-
-/*
-	ici il y a les differentes redirections, 
-	il faut encore update les infos a leur envoyer
-*/
-
-/*void	ft_first_iter(char *args[], char *envp[])
-{
-	if (ft_meta(args[1]) == 2)
-		ft_input(args, envp);
-	else if (ft_meta(args[1]) == 3)
-		ft_redir(args, envp);
-	else if (ft_meta(args[1]) == 4)
-		ft_heredoc(args, envp);
-	else if (ft_meta(args[1]) == 5)
-		ft_append(args, envp);
-}*/
 
 int	ft_stacklen(t_lexer *list)
 {
@@ -133,5 +81,28 @@ void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args)
 		}
 		list = head;
 		ft_multi_pipe(list, n_envp, i);
+	}
+}
+
+void	ft_check(t_cmds *cmd, int fd, int sv_stdin)
+{
+	while (cmd->redirections->token != NULL)
+	{
+		if (!ft_strncmp(cmd->redirections->token, ">", 1)
+			&& ft_strlen(cmd->redirections->token) == 1)
+			ft_open_file(cmd, sv_stdin, fd, 0);
+		if (!ft_strncmp(cmd->redirections->token, ">>", 2)
+			&& ft_strlen(cmd->redirections->token) == 2)
+			ft_open_file(cmd, sv_stdin, fd, 1);
+		if (!ft_strncmp(cmd->redirections->token, "<", 1)
+			&& ft_strlen(cmd->redirections->token) == 1)
+			ft_open_file(cmd, sv_stdin, fd, 2);
+		if (!ft_strncmp(cmd->redirections->token, "<<", 1)
+			&& ft_strlen(cmd->redirections->token) == 2)
+			ft_open_file(cmd, sv_stdin, fd, 3);
+		if (cmd->redirections->next != NULL)
+			cmd->redirections = cmd->redirections->next;
+		else
+			break ;
 	}
 }
