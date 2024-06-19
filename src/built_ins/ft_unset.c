@@ -131,6 +131,8 @@ static t_env	*ft_copy_envp(t_env *head)
 
 t_env	*ft_unset(t_cmds *cmd, t_env *n_envp)
 {
+	if (!cmd->str[1])
+		return (ft_copy_envp(n_envp));
 	n_envp = ft_remove_node(cmd, n_envp);
 	return (ft_copy_envp(n_envp));
 }

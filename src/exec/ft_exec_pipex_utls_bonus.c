@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 12:11:34 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/18 16:39:02 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/19 12:49:43 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_here_txt(t_cmds *cmd, char *limiter, int fd)
 		ft_putchar_fd('\n', fd);
 		free(line);
 	}
-	//unlink(".feuys.txt");
 }
 
 char	*ft_free_tab(char **tabs)
