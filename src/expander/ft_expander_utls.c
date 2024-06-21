@@ -46,7 +46,7 @@ static char	*ft_expand_variable_main_loop(char *expanded_arg, char *dollar_pos)
 				free(expanded_arg);
 				return (NULL);
 			}
-			free(expanded_arg);
+			//free(expanded_arg);
 			expanded_arg = replacement;
 		}
 		dollar_pos = ft_strchr(dollar_pos + 1, '$');

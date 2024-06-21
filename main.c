@@ -14,6 +14,8 @@
 #define MEOW "\033[5m<-\033[0;35m(-x _ x-)"
 #define MIAO " \033[1;3;5;45mmini\033[1;3;5;37;45mshell\033[0;5m->\033[0m "
 
+int	g_exit_global = 0;
+
 static void	ft_free_envp(t_env *n_envp)
 {
 	t_env	*current;
