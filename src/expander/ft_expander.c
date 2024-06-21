@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 16:44:43 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:30:01 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*ft_extract_env_var_name(char *dollar_pos)
 	return (var_name);
 }
 
-static char	*ft_env_var_substitution(char *expanded_arg, char *dollar_pos)
+static char	*ft_env_var_substitution(t_env **n_envp, char *expanded_arg, char *dollar_pos)
 {
 	char	*var_name;
 	char	*var_value;
@@ -63,7 +63,7 @@ static char	*ft_env_var_substitution(char *expanded_arg, char *dollar_pos)
 
 	next_char = dollar_pos + 1;
 	var_name = ft_extract_env_var_name(dollar_pos);
-	var_value = ft_get_env_value(var_name);
+	var_value = ft_get_env_value(*n_envp, var_name);
 	if (!var_value)
 	{
 		if (*next_char == '\0')
@@ -81,15 +81,15 @@ static char	*ft_env_var_substitution(char *expanded_arg, char *dollar_pos)
 	return (temp);
 }
 
-char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos)
+char	*ft_replace_env_variable(t_env **n_envp, char *expanded_arg, char *dollar_pos)
 {
 	char	*temp;
 
-	temp = ft_env_var_substitution(expanded_arg, dollar_pos);
+	temp = ft_env_var_substitution(n_envp, expanded_arg, dollar_pos);
 	return (temp);
 }
 
-int	ft_expander(t_cmds *cmd_list)
+int	ft_expander(t_cmds *cmd_list, t_env **n_envp)
 {
 	t_cmds	*list;
 	int		i;
@@ -101,7 +101,7 @@ int	ft_expander(t_cmds *cmd_list)
 		i = 0;
 		while (list->str[i])
 		{
-			expanded_str = ft_expand_variable(list->str[i]);
+			expanded_str = ft_expand_variable(n_envp, list->str[i]);
 			if (!expanded_str)
 			{
 				list->str[i] = NULL;

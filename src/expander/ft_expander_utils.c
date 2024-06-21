@@ -3,18 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:24:45 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:35:00 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:32:39 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_get_env_value(const char *var_name)
+char	*ft_get_env_value(t_env *n_envp, const char *var_name)
 {
-	return (getenv(var_name));
+	char	*value;
+	t_env	*current;
+
+	current = NULL;
+	value = NULL;
+	current = n_envp;
+	while(current)
+	{
+		if (!ft_strncmp(current->key, var_name, ft_strlen(var_name)) 
+			&& ft_strlen(var_name) == ft_strlen(current->key))
+			value = current->value;
+		else
+			value = "\n";
+		current = current->next;
+	}
+	return (value);
 }
 
 int	ft_count_occurrences(const char *str, const char *old_substr)
