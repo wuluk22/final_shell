@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:44:28 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/29 14:09:26 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:07:57 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 void	ft_signal_handler(int sign)
 {
 	if (sign == SIGINT)
@@ -22,17 +21,10 @@ void	ft_signal_handler(int sign)
 		rl_redisplay();
 		g_exit_global = 1;
 	}
-	/*else if (sign == SIGQUIT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}*/
 }
 
 void	ft_set_input_signals(void)
 {
-	//signal(SIGQUIT, ft_signal_handler);
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

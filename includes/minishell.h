@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 17:38:38 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:12:28 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,14 +169,14 @@ char	*ft_trim(char *str);
 void	ft_parent(t_cmds *cmd, pid_t pid);
 
 //expand
-char	*ft_get_env_value(const char *var_name);
+char	*ft_get_env_value(t_env *n_envp, const char *var_name);
 int		ft_count_occurrences(const char *str, const char *old_substr);
 void	ft_delete_quotes(char *str, char c);
 char	*ft_allocate_result(char *str, char *old_substr, char *new_substr);
 char	*ft_replace_substr(char *str, char *old_substr, char *new_substr);
-int		ft_expander(t_cmds *cmd_list);
-char	*ft_replace_env_variable(char *expanded_arg, char *dollar_pos);
-char	*ft_expand_variable(const char *arg);
+int		ft_expander(t_cmds *cmd_list, t_env **n_envp);
+char	*ft_replace_env_variable(t_env **n_envp, char *expanded_arg, char *dollar_pos);
+char	*ft_expand_variable(t_env **n_envp, const char *arg);
 char	*ft_replace_exit_status(char *expanded_arg);
 
 //lexer

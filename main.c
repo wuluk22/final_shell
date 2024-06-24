@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 17:36:57 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:20:10 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	ft_tokenize(&lexer_list, line);
 	ft_lexer_to_cmds(&cmd_list, &lexer_list);
 	if (cmd_list)
-		ft_expander(cmd_list);
+		ft_expander(cmd_list, n_envp);
 	if (ft_b_ins(cmd_list, lexer_list, n_envp) == 1)
 	{
 		ft_cleanup_cmd_list(cmd_list);
