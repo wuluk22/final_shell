@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:48:57 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:56 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:22:24 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,31 @@ static bool	ft_ex_var(char *expanded_arg, char *dollar_pos, bool *single_quote)
 	return (!*single_quote);
 }
 
-static char	*ft_expand_variable_main_loop(t_env **n_envp, char *expanded_arg, char *dollar_pos)
+static char	*ft_exp_var_loop(t_env **n_envp, char *exp_arg, char *dollar_pos)
 {
 	bool	single_quote;
-	char	*replacement;
+	char	*repl;
 
 	single_quote = false;
 	while (dollar_pos)
 	{
-		if (ft_ex_var(expanded_arg, dollar_pos, &single_quote))
+		if (ft_ex_var(exp_arg, dollar_pos, &single_quote))
 		{
-			replacement = NULL;
+			repl = NULL;
 			if (*(dollar_pos + 1) == '?')
-				replacement = ft_replace_exit_status(expanded_arg);
+				repl = ft_replace_exit_status(exp_arg);
 			else
-				replacement = ft_replace_env_variable(n_envp, expanded_arg, dollar_pos);
-			if (!replacement)
+				repl = ft_rep_env_var(n_envp, exp_arg, dollar_pos);
+			if (!repl)
 			{
-				free(expanded_arg);
+				free(exp_arg);
 				return (NULL);
 			}
-			//free(expanded_arg);
-			expanded_arg = replacement;
+			exp_arg = repl;
 		}
 		dollar_pos = ft_strchr(dollar_pos + 1, '$');
 	}
-	return (expanded_arg);
+	return (exp_arg);
 }
 
 char	*ft_expand_variable(t_env **n_envp, const char *arg)
@@ -66,5 +65,5 @@ char	*ft_expand_variable(t_env **n_envp, const char *arg)
 		exit(EXIT_FAILURE);
 	}
 	dollar_pos = ft_strchr(expanded_arg, '$');
-	return (ft_expand_variable_main_loop(n_envp, expanded_arg, dollar_pos));
+	return (ft_exp_var_loop(n_envp, expanded_arg, dollar_pos));
 }

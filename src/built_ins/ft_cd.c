@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:33:23 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:22:53 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:45:25 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,66 +61,20 @@ static t_env	*ft_change_pwd(t_cmds *cmd, t_env **n_envp)
 	new_wd = NULL;
 	cd = NULL;
 	if (cmd->str[1])
-	{
 		if (ft_change_directory(cmd, &crt_wd, &new_wd) != 0)
 			return (NULL);
-	}
-	else if(cmd->str[0])
+	if (!cmd->str[1])
 	{
-		//write(1, "yo\n", 3);
-		while(ft_strncmp(current->key, "USER_ZDOTDIR", 12) != 0)
-			current = current->next;
-		//printf("%s\n", current->key);
+		while (ft_strncmp(current->key, "HOME", 4) != 0)
+			if (current->next != NULL)
+				current = current->next;
 		chdir(current->value);
-		//free(current);
 	}
 	ft_update_pwd(head);
 	free(crt_wd);
 	free(new_wd);
 	return (head);
 }
-
-/*static t_env	*ft_change_pwd(t_cmds *cmd, t_env **n_envp)
-{
-	t_env	*head;
-	t_env	*current;
-	char	*crt_wd;
-	char	*new_wd;
-	int		i;
-	int		ret;
-
-	i = 0;
-	head = *n_envp;
-	current = *n_envp;
-	while (ft_strncmp(current->key, "PWD", 3) != 0)
-		current = current->next;
-	current->next->value = ft_strdup(getcwd(NULL, 0));
-
-	crt_wd = getcwd(NULL, 0);
-	if (!crt_wd)
-	{
-		perror("getcwd");
-		return (NULL);
-	}
-	crt_wd = ft_strjoin(crt_wd, "/");
-	new_wd = ft_strjoin(crt_wd, cmd->str[1]);
-	if (chdir(new_wd) == -1 || cmd->str[2])
-	{
-		g_exit_global = 1;
-		if (i == 0)
-			ft_putstr_fd(" No such file or directory\n", 2);
-		i++;
-		free(crt_wd);
-		free(new_wd);
-		return (NULL);
-	}
-	ret = chdir(new_wd);
-	current->value = ft_strdup(getcwd(NULL, 0));
-	current = head;
-	free(crt_wd);
-	free(new_wd);
-	return (current);
-}*/
 
 t_env	*ft_cd(t_cmds *cmd, t_env *n_envp)
 {

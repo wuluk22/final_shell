@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:08:47 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/21 16:55:17 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:28:21 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_hd_case(t_cmds *cmd, int sv_stdin, int fd)
 {
 	fd = open(".feuys.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	dup2(sv_stdin, 0);
-	ft_here_txt(cmd, ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")), fd);
+	ft_txt(cmd, ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")), fd);
 	close(fd);
 	fd = open(".feuys.txt", O_RDONLY, 0777);
 	dup2(fd, 0);

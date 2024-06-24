@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:24:45 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/21 16:32:39 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:23:35 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ char	*ft_get_env_value(t_env *n_envp, const char *var_name)
 	current = NULL;
 	value = NULL;
 	current = n_envp;
-	while(current)
+	while (current)
 	{
-		if (!ft_strncmp(current->key, var_name, ft_strlen(var_name)) 
+		if (!ft_strncmp(current->key, var_name, ft_strlen(var_name))
 			&& ft_strlen(var_name) == ft_strlen(current->key))
+		{
 			value = current->value;
-		else
-			value = "\n";
+			return (value);
+		}
 		current = current->next;
 	}
+	value = "\n";
 	return (value);
 }
 

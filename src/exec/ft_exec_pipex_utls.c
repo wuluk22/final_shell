@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+void	ft_free_multi(pid_t *pid, int last_exit)
+{
+	g_exit_global = last_exit;
+	free(pid);
+}
+
 static char	*ft_check_direct_access(char *cmd)
 {
 	if (!access(cmd, X_OK))

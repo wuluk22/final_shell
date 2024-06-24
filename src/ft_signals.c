@@ -6,11 +6,12 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:44:28 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/21 17:07:57 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:45:56 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 void	ft_signal_handler(int sign)
 {
 	if (sign == SIGINT)
@@ -29,8 +30,8 @@ void	ft_set_input_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-//void	ft_signal_handler2(int sign)
-//{
-//	if (sign == SIGINT)
-//		ft_putendl_fd("", 1);
-//}
+void	ft_set_dfl_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}

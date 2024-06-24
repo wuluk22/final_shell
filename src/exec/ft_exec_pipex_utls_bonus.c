@@ -12,7 +12,20 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_here_txt(t_cmds *cmd, char *limiter, int fd)
+void	ft_process(t_cmds *cmd, t_env **n_envp, int nb, int argc)
+{
+	ft_handle_process(cmd, nb, argc);
+	if (ft_check_built_ins(cmd->str) == 0)
+	{
+		cmd->builton = cmd->str[0];
+		ft_launch_b(cmd, n_envp, cmd->str);
+	}
+	else if (ft_check_built_ins(cmd->str) == 1)
+		ft_exec(*n_envp, cmd->str);
+	exit(EXIT_SUCCESS);
+}
+
+void	ft_txt(t_cmds *cmd, char *limiter, int fd)
 {
 	char	*line;
 

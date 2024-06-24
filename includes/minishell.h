@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/21 16:12:28 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:47:06 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ enum e_token
 	WHITE_SPACE = ' ',
 	NEW_LINE = '\n',
 	QUOTE = '\'',
-	//DOUBLE_QUOTE = '\"',
 	ESCAPE = '\\',
 	ENV = '$',
 	PIPE_LINE = '|',
@@ -65,8 +64,6 @@ typedef struct s_lexer
 	char				*token;
 	char				*chr;
 	int					i;
-//	enum				e_token;
-//	enum				e_state;
 	struct s_lexer		*prev;
 	struct s_lexer		*next;
 }	t_lexer;
@@ -106,7 +103,6 @@ typedef struct s_pipex
 
 typedef struct s_env
 {
-	//int				export;
 	char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -135,12 +131,18 @@ char	*ft_trim(char *str);
 //signals
 void	ft_signal_handler(int sign);
 void	ft_set_input_signals(void);
+void	ft_set_dfl_signal(void);
 
 //exec
 void	ft_error(void);
 void	ft_close(int *fd);
 void	ft_free_array(char **array);
 char	*ft_free_tab(char **tabs);
+void	ft_process(t_cmds *cmd, t_env **n_envp, int nb, int argc);
+void	ft_exec(t_env *n_envp, char **cmd);
+void	ft_handle_process(t_cmds *cmd, int nb, int argc);
+void	ft_init_multi(t_cmds *list);
+void	ft_free_multi(pid_t *pid, int last_exit);
 void	ft_append(char *args[], char *envp[]);
 int		ft_meta(char *c);
 int		ft_list_parkour(t_lexer *list);
@@ -150,9 +152,9 @@ void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args);
 void	ft_heredoc(char *args[], char *envp[]);
 void	ft_input(char *args[], char *envp[]);
 char	*ft_parsing(char **cmd_paths, char *cmd_args);
-void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc);
+void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j);
 void	ft_open_file(t_cmds *cmd, int sv_stdin, int fd, int nb);
-void	ft_here_txt(t_cmds *cmd, char *limiter, int fd);
+void	ft_txt(t_cmds *cmd, char *limiter, int fd);
 char	*ft_get_path(char **envp, char *cmd);
 char	*ft_strnstr(const char *find, const char *to_find, size_t len);
 void	ft_redir(char *args[], char *envp[]);
@@ -175,7 +177,7 @@ void	ft_delete_quotes(char *str, char c);
 char	*ft_allocate_result(char *str, char *old_substr, char *new_substr);
 char	*ft_replace_substr(char *str, char *old_substr, char *new_substr);
 int		ft_expander(t_cmds *cmd_list, t_env **n_envp);
-char	*ft_replace_env_variable(t_env **n_envp, char *expanded_arg, char *dollar_pos);
+char	*ft_rep_env_var(t_env **n_envp, char *expanded_arg, char *dollar_pos);
 char	*ft_expand_variable(t_env **n_envp, const char *arg);
 char	*ft_replace_exit_status(char *expanded_arg);
 
