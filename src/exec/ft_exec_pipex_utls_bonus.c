@@ -49,6 +49,7 @@ char	*ft_free_tab(char **tabs)
 
 void	ft_parent(t_cmds *cmd, pid_t pid)
 {
+	(void)pid;
 	if (cmd->p_fd_input[0] != -1)
 	{
 		close(cmd->p_fd_input[0]);
@@ -58,7 +59,7 @@ void	ft_parent(t_cmds *cmd, pid_t pid)
 		ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
 			sizeof(cmd->p_fd_input));
 	cmd->p_fd_output[0] = -1;
-	waitpid(pid, NULL, 0);
+	wait(NULL);
 }
 
 char	*ft_strnstr(const char *find, const char *to_find, size_t len)

@@ -45,6 +45,13 @@ int	ft_b_ins(t_cmds *cmd_list, t_lexer *lexer_list, t_env **n_envp)
 			*n_envp = ft_cd(cmd_list, *n_envp);
 			return (0);
 		}
+		else if ((ft_strncmp(cmd_list->str[0], "cat", 3) == 0) && !cmd_list->str[1])
+		{
+			//signal(SIGINT, SIG_DFL);
+			
+			ft_set_input_signals();
+			return (0);
+		}
 		else
 			ft_command_exec(cmd_list, n_envp, cmd_list->str);
 	}

@@ -34,7 +34,7 @@
 # define DOUBLE_QUOTE '"'
 # define SINGLE_QUOTE '\''
 
-int	g_exit_global;
+extern int	g_exit_global;
 
 enum e_token
 {

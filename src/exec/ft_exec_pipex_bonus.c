@@ -18,6 +18,7 @@ static void	ft_exec(t_env *n_envp, char **cmd)
 	char	*path;
 	char	**envp;
 
+	//signal(SIGINT, SIG_DFL);
 	envp = ft_transform(n_envp);
 	if (!*cmd || !cmd)
 		exit(127);
@@ -60,6 +61,7 @@ static void	ft_handle_process(t_cmds *cmd, int nb, int argc)
 
 void	ft_process(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 {
+	//ft_set_input_signals();
 	ft_handle_process(cmd, nb, argc);
 	if (ft_check_built_ins(cmd->str) == 0)
 	{
@@ -89,6 +91,7 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 			exit(EXIT_FAILURE);
 		}
 	}
+	//signal(SIGINT, SIG_DFL);
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
@@ -112,13 +115,13 @@ static int pre_check_commands(t_cmds *list, t_env *n_envp)
         {
             ft_putstr_fd("command not found\n", 2);
             g_exit_global = 127;
-            free(envp);
+            //free(envp);
             return 0;
         }
         free(path);
         list = list->next;
     }
-    free(envp);
+    //free(envp);
     return 1;
 }
 
@@ -142,7 +145,9 @@ void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc)
 	list->p_fd_input[1] = -1;
 	while (++i <= argc)
 	{
+		//signal(SIGINT, SIG_DFL);
 		pid[i] = ft_pipe(list, n_envp, i, argc);
+		//ft_set_input_signals();
 		if (list->next)
 			list = list->next;
 	}

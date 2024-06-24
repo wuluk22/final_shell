@@ -50,12 +50,30 @@ static int	ft_change_directory(t_cmds *cmd, char **crt_wd, char **new_wd)
 static t_env	*ft_change_pwd(t_cmds *cmd, t_env **n_envp)
 {
 	t_env	*head;
+	t_env	*current;
 	char	*crt_wd;
 	char	*new_wd;
+	char	*cd;
 
 	head = *n_envp;
-	if (ft_change_directory(cmd, &crt_wd, &new_wd) != 0)
-		return (NULL);
+	current = head;
+	crt_wd = NULL;
+	new_wd = NULL;
+	cd = NULL;
+	if (cmd->str[1])
+	{
+		if (ft_change_directory(cmd, &crt_wd, &new_wd) != 0)
+			return (NULL);
+	}
+	else if(cmd->str[0])
+	{
+		//write(1, "yo\n", 3);
+		while(ft_strncmp(current->key, "USER_ZDOTDIR", 12) != 0)
+			current = current->next;
+		//printf("%s\n", current->key);
+		chdir(current->value);
+		//free(current);
+	}
 	ft_update_pwd(head);
 	free(crt_wd);
 	free(new_wd);

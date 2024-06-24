@@ -17,21 +17,22 @@ void	ft_signal_handler(int sign)
 	if (sign == SIGINT)
 	{
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_global = 1;
 	}
-	else if (sign == SIGQUIT)
+	/*else if (sign == SIGQUIT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
+	}*/
 }
 
 void	ft_set_input_signals(void)
 {
-	signal(SIGQUIT, ft_signal_handler);
+	//signal(SIGQUIT, ft_signal_handler);
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

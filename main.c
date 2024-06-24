@@ -61,11 +61,14 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	return (0);
 }
 
-static void	minishell_loop(t_env *n_envp, char *line)
+static void	minishell_loop(t_env *n_envp)
 {
+	char	*line;
+
+	line = NULL;
+	ft_set_input_signals();
 	while (1)
 	{
-		ft_set_input_signals();
 		line = readline(MEOW MIAO);
 		if (!line)
 			break ;
@@ -83,7 +86,6 @@ static void	minishell_loop(t_env *n_envp, char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	t_env	*n_envp;
 	t_env	*head;
 
@@ -102,7 +104,6 @@ int	main(int argc, char **argv, char **envp)
 	n_envp = ft_init_envp(n_envp, head, envp, -1);
 	(void)argc;
 	(void)argv;
-	line = NULL;
-	minishell_loop(n_envp, line);
+	minishell_loop(n_envp);
 	return (EXIT_SUCCESS);
 }
