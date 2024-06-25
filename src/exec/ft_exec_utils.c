@@ -39,7 +39,7 @@ static void	ft_hd_case(t_cmds *cmd, int sv_stdin, int fd)
 {
 	fd = open(".feuys.txt", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	dup2(sv_stdin, 0);
-	ft_txt(cmd, ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")), fd);
+	ft_txt(cmd, ft_trim(ft_trim_quotes(cmd->redirections->next->token)), fd);
 	close(fd);
 	fd = open(".feuys.txt", O_RDONLY, 0777);
 	dup2(fd, 0);
@@ -49,13 +49,13 @@ static void	ft_hd_case(t_cmds *cmd, int sv_stdin, int fd)
 void	ft_open_file(t_cmds *cmd, int sv_stdin, int fd, int nb)
 {
 	if (nb == 0)
-		fd = open(ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")),
+		fd = open(ft_trim(ft_trim_quotes(cmd->redirections->next->token)),
 				O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (nb == 1)
-		fd = open(ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")),
+		fd = open(ft_trim(ft_trim_quotes(cmd->redirections->next->token)),
 				O_WRONLY | O_APPEND | O_CREAT, 0777);
 	if (nb == 2)
-		fd = open(ft_trim(ft_strtrim(cmd->redirections->next->token, "\"")),
+		fd = open(ft_trim(ft_trim_quotes(cmd->redirections->next->token)),
 				O_RDONLY, 0777);
 	if (nb == 3)
 		ft_hd_case(cmd, sv_stdin, fd);

@@ -127,6 +127,7 @@ typedef struct s_cmds
 
 //main
 char	*ft_trim(char *str);
+t_cmds	*ft_trim_quotes_cmd(t_cmds *cmd);
 
 //signals
 void	ft_signal_handler(int sign);
@@ -232,5 +233,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
 void	ft_cleanup_cmd_list(t_cmds *cmd_list);
+char	*ft_trim_quotes(char *str);
 
 #endif

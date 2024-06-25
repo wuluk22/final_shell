@@ -33,6 +33,33 @@ static void	ft_free_envp(t_env *n_envp)
 		current = next;
 	}
 }
+t_cmds	*ft_trim_quotes_cmd(t_cmds *cmd)
+{
+	t_cmds	*head;
+	int		i;
+	char	*trimmed;
+
+	head = cmd;
+	while(cmd)
+	{
+		i = 0;
+		while (cmd->str && cmd->str[i])
+		{
+			//printf("-%s-\n", cmd->str[i]);
+			trimmed = ft_strtrim(cmd->str[i], "\'");
+			//printf("-%s-\n", trimmed);
+			if (trimmed)
+			{
+				free(cmd->str[i]);
+				cmd->str[i] = trimmed;
+			}
+			i++;
+		}
+		//if (cmd->next)
+		cmd = cmd->next;
+	}
+	return (head);
+}
 
 static int	ft_process_command(t_env **n_envp, char *line)
 {
@@ -50,6 +77,7 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	ft_lexer_to_cmds(&cmd_list, &lexer_list);
 	if (cmd_list)
 		ft_expander(cmd_list, n_envp);
+	ft_trim_quotes_cmd(cmd_list);
 	if (ft_b_ins(cmd_list, lexer_list, n_envp) == 1)
 	{
 		ft_cleanup_cmd_list(cmd_list);
@@ -72,7 +100,8 @@ static void	minishell_loop(t_env *n_envp)
 		line = readline(MEOW MIAO);
 		if (!line)
 			break ;
-		add_history(line);
+		if (ft_strncmp(line, "\r", ft_strlen(line) != 0))
+			add_history(line);
 		if (ft_process_command(&n_envp, line))
 		{
 			free(line);

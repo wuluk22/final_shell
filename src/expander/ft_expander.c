@@ -101,7 +101,7 @@ int	ft_expander(t_cmds *cmd_list, t_env **n_envp)
 		i = 0;
 		while (list->str[i])
 		{
-			expanded_str = ft_expand_variable(n_envp, list->str[i]);
+			expanded_str = ft_expand_variable(n_envp, list->str[i]);	
 			if (!expanded_str)
 			{
 				list->str[i] = NULL;

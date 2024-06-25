@@ -56,7 +56,7 @@ int	ft_echo(t_cmds *cmd)
 		newline = 1;
 		i++;
 	}
-	else if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0)
+	else if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0 && ft_strlen(cmd->str[i]) == 1)
 	{
 		write(1, "$", 1);
 		return (EXIT_SUCCESS);
