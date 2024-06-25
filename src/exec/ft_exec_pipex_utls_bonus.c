@@ -72,7 +72,8 @@ void	ft_parent(t_cmds *cmd, pid_t pid)
 		ft_memcpy(cmd->next->p_fd_input, cmd->p_fd_output,
 			sizeof(cmd->p_fd_input));
 	cmd->p_fd_output[0] = -1;
-	wait(NULL);
+	if (cmd->redirections)
+		wait(NULL);
 }
 
 char	*ft_strnstr(const char *find, const char *to_find, size_t len)
