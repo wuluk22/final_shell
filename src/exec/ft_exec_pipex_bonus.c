@@ -89,6 +89,16 @@ static int	pre_check_commands(t_cmds *list, t_env *n_envp)
 	char	*path;
 	char	**envp;
 
+	if (ft_strncmp(list->str[0], "exit", ft_strlen(list->str[0])) == 0)
+	{
+		if (list->str[1] && list->str[2])
+		{
+
+			g_exit_global = 1;
+			return (0);
+		}
+		return (1);
+	}
 	envp = ft_transform(n_envp);
 	path = NULL;
 	while (list)
@@ -115,6 +125,7 @@ void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j)
 	status = 0;
 	pid = malloc((argc + 1) * sizeof(pid_t));
 	if (!pre_check_commands(list, *n_envp) || !pid || !list)
+	if (!pid || !list)
 		return ;
 	ft_memset(pid, 0, (argc + 1) * sizeof(pid_t));
 	ft_init_multi(list);

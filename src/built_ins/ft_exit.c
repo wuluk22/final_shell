@@ -67,8 +67,9 @@ static int	ft_parse_exit_arguments(char **args)
 		return (ft_handle_numeric_argument(args[1]));
 	else
 	{
-		write(2, "too many arguments\n", 20);
-		return (1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		g_exit_global = 1;
+		return (EXIT_FAILURE);
 	}
 }
 

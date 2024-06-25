@@ -48,7 +48,8 @@ static char	*ft_exp_var_loop(t_env **n_envp, char *exp_arg, char *dollar_pos)
 				free(exp_arg);
 				return (NULL);
 			}
-			free(exp_arg);
+			//if (exp_arg)
+			//	free(exp_arg);
 			exp_arg = repl;
 			dollar_pos = ft_strchr(exp_arg, '$');  // Reset dollar_pos to handle new expanded string
 		}
