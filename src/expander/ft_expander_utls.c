@@ -39,6 +39,8 @@ static char	*ft_exp_var_loop(t_env **n_envp, char *exp_arg, char *dollar_pos)
 			repl = NULL;
 			if (*(dollar_pos + 1) == '?')
 				repl = ft_replace_exit_status(exp_arg);
+			else if (*(dollar_pos + 1) == '\0')  // Case for string that is only a dollar sign
+				return exp_arg;
 			else
 				repl = ft_rep_env_var(n_envp, exp_arg, dollar_pos);
 			if (!repl)
@@ -46,9 +48,14 @@ static char	*ft_exp_var_loop(t_env **n_envp, char *exp_arg, char *dollar_pos)
 				free(exp_arg);
 				return (NULL);
 			}
+			free(exp_arg);
 			exp_arg = repl;
+			dollar_pos = ft_strchr(exp_arg, '$');  // Reset dollar_pos to handle new expanded string
 		}
-		dollar_pos = ft_strchr(dollar_pos + 1, '$');
+		else
+		{
+			dollar_pos = ft_strchr(dollar_pos + 1, '$');
+		}
 	}
 	return (exp_arg);
 }
@@ -58,6 +65,8 @@ char	*ft_expand_variable(t_env **n_envp, const char *arg)
 	char	*expanded_arg;
 	char	*dollar_pos;
 
+	if (ft_strncmp(arg, "$", ft_strlen(arg)) == 0)
+		return (ft_strdup("$"));
 	expanded_arg = ft_strdup(arg);
 	if (!expanded_arg)
 	{

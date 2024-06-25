@@ -14,6 +14,8 @@
 
 static char	*ltrim(char *str)
 {
+	if (!str)
+		return (NULL);
 	while (ft_isspace((unsigned char)*str))
 		str++;
 	return (str);
@@ -23,6 +25,8 @@ static char	*rtrim(char *str)
 {
 	char	*end;
 
+	if (!str)
+		return (NULL);
 	end = str + ft_strlen(str) - 1;
 	while (end >= str && ft_isspace((unsigned char)*end))
 		end--;
@@ -32,6 +36,8 @@ static char	*rtrim(char *str)
 
 char	*ft_trim(char *str)
 {
+	if (!str)
+		return (NULL);
 	return (rtrim(ltrim(str)));
 }
 

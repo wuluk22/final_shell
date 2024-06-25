@@ -82,7 +82,8 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	{
 		ft_cleanup_cmd_list(cmd_list);
 		ft_free_list(lexer_list);
-		return (1);
+		//printf("yo\n");
+		return (0);
 	}
 	ft_cleanup_cmd_list(cmd_list);
 	ft_free_list(lexer_list);
@@ -97,7 +98,7 @@ static void	minishell_loop(t_env *n_envp)
 	ft_set_input_signals();
 	while (1)
 	{
-		line = readline(MEOW MIAO);
+		line = ft_strdup(ft_trim(readline(MEOW MIAO)));
 		if (!line)
 			break ;
 		if (ft_strncmp(line, "\r", ft_strlen(line) != 0))
@@ -105,11 +106,13 @@ static void	minishell_loop(t_env *n_envp)
 		if (ft_process_command(&n_envp, line))
 		{
 			free(line);
+			//printf("yo\n");
 			break ;
 		}
-		if (line)
-			free(line);
+		//if (line)
+		free(line);
 	}
+	//if (n_envp)
 	ft_free_envp(n_envp);
 }
 

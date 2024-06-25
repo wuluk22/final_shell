@@ -20,6 +20,8 @@ static int	ft_exit_help(t_cmds *cmd_list, t_lexer *lexer_list)
 		ft_free_list(lexer_list);
 		return (1);
 	}
+	if (ft_exit(cmd_list) == 1)
+		return (1);
 	return (0);
 }
 

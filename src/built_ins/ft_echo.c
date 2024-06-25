@@ -56,9 +56,11 @@ int	ft_echo(t_cmds *cmd)
 		newline = 1;
 		i++;
 	}
-	else if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0 && ft_strlen(cmd->str[i]) == 1)
+	cmd->str[i] = ft_strtrim(cmd->str[i], "\"");
+	//printf("-%s-\n", cmd->str[i]);
+	if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0 && ft_strlen(cmd->str[i]) == 1)
 	{
-		write(1, "$", 1);
+		write(1, "$\n", 2);
 		return (EXIT_SUCCESS);
 	}
 	while (cmd->str[j])

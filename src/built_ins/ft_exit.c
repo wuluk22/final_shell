@@ -67,7 +67,7 @@ static int	ft_parse_exit_arguments(char **args)
 		return (ft_handle_numeric_argument(args[1]));
 	else
 	{
-		ft_putstr_fd("too many arguments\n", 2);
+		write(2, "too many arguments\n", 20);
 		return (1);
 	}
 }
@@ -76,34 +76,3 @@ int	ft_exit(t_cmds *cmd)
 {
 	return (ft_parse_exit_arguments(cmd->str));
 }
-
-/*int	ft_exit(t_cmds *cmd)
-{
-	int	ret;
-
-	if (ft_parcour(cmd->str) == 1)
-	{
-		exit(g_exit_global);
-		return (0);
-	}
-	else if (ft_parcour(cmd->str) == 2 || !ft_is_strnum(cmd->str[1]))
-	{
-		if (ft_is_strnum(cmd->str[1]))
-		{
-			ret = ft_atoi(cmd->str[1]);
-			exit(ret);
-			return (0);
-		}
-		else
-		{
-			ft_putstr_fd("numeric argument required\n", 2);
-			exit(255);
-			return (0);
-		}
-	}
-	else
-	{
-		ft_putstr_fd("too many arguments\n", 2);
-		return (1);
-	}
-}*/

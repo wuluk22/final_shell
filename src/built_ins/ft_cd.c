@@ -38,8 +38,8 @@ static int	ft_change_directory(t_cmds *cmd, char **crt_wd, char **new_wd)
 	*new_wd = ft_strjoin(*crt_wd, cmd->str[1]);
 	if (chdir(*new_wd) == -1 || cmd->str[2])
 	{
+		ft_putstr_fd(" No such file or directory\n", 2);
 		g_exit_global = 1;
-		ft_putstr_fd("No such file or directory\n", 2);
 		free(*crt_wd);
 		free(*new_wd);
 		return (1);
