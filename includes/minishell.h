@@ -168,7 +168,6 @@ void	ft_meta_mgmt(char **envp, char *cmd);
 t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i);
 char	**ft_transform(t_env *n_envp);
 void	ft_check(t_cmds *cmd, int fd, int sv_stdin);
-char	*ft_trim(char *str);
 void	ft_parent(t_cmds *cmd, pid_t pid);
 
 //expand
