@@ -106,7 +106,7 @@ static int	pre_check_commands(t_cmds *list, t_env *n_envp)
 		path = ft_get_path(envp, list->str[0]);
 		if (!path)
 		{
-			ft_putstr_fd(" command not found\n", 2);
+			//ft_putstr_fd(" command not found\n", 2);
 			g_exit_global = 127;
 			return (0);
 		}
@@ -140,7 +140,10 @@ void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j)
 	{
 		waitpid(pid[j++], &status, 0);
 		if (WIFEXITED(status))
-			last_exit = WEXITSTATUS(status);
+			if (WEXITSTATUS(status) != 0)
+				last_exit = WEXITSTATUS(status);
+		if (last_exit == 0)
+			last_exit = g_exit_global;
 	}
 	ft_free_multi(pid, last_exit);
 }
