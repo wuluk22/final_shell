@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:48:28 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/24 12:43:42 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/27 16:35:12 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,10 @@ static int	pre_check_commands(t_cmds *list, t_env *n_envp)
 	if (ft_strncmp(list->str[0], "exit", ft_strlen(list->str[0])) == 0)
 	{
 		if (list->str[1] && list->str[2])
-		{
-
 			g_exit_global = 1;
-			return (0);
-		}
-		return (1);
+		else
+			return (1);
+		return (0);
 	}
 	envp = ft_transform(n_envp);
 	path = NULL;
@@ -106,8 +104,13 @@ static int	pre_check_commands(t_cmds *list, t_env *n_envp)
 		path = ft_get_path(envp, list->str[0]);
 		if (!path)
 		{
-			ft_putstr_fd(" command not found\n", 2);
+			if (list->str[0] == NULL && list->str[1] == NULL && list->redirections)
+			{
+				g_exit_global = 0;
+				return (0);
+			}
 			g_exit_global = 127;
+			ft_putstr_fd("command not foundi\n", 2);
 			return (0);
 		}
 		list = list->next;
@@ -124,7 +127,7 @@ void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j)
 	last_exit = 0;
 	status = 0;
 	pid = malloc((argc + 1) * sizeof(pid_t));
-	if (!pre_check_commands(list, *n_envp) || !pid || !list)
+	pre_check_commands(list, *n_envp);
 	if (!pid || !list)
 		return ;
 	ft_memset(pid, 0, (argc + 1) * sizeof(pid_t));
@@ -140,7 +143,10 @@ void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j)
 	{
 		waitpid(pid[j++], &status, 0);
 		if (WIFEXITED(status))
-			last_exit = WEXITSTATUS(status);
+			if (WEXITSTATUS(status) != 0)
+				last_exit = WEXITSTATUS(status);
+		if (last_exit == 0)
+			last_exit = g_exit_global;
 	}
 	ft_free_multi(pid, last_exit);
 }
