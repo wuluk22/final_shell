@@ -45,7 +45,7 @@ static void	ft_fill_command_strings(t_lexer **tokens, t_cmds *new_cmd)
 				trimmed = ft_strtrim(trimmed, "\"");
 			free(current->token);
 			current->token = trimmed;
-			new_cmd->str[i++] = current->token;
+			new_cmd->str[i++] = ft_trim(current->token);
 		}
 		current = current->next;
 	}

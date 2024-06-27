@@ -66,7 +66,7 @@ char	*ft_expand_variable(t_env **n_envp, const char *arg)
 	char	*expanded_arg;
 	char	*dollar_pos;
 
-	if (ft_strncmp(arg, "$", ft_strlen(arg)) == 0)
+	if (ft_strncmp(arg, "$", ft_strlen(arg)) == 0 && ft_strlen(arg) != 0)
 		return (ft_strdup("$"));
 	expanded_arg = ft_strdup(arg);
 	if (!expanded_arg)
