@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:45:54 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/29 10:35:24 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/27 15:32:59 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
