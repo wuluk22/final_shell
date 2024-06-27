@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:06:30 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/24 12:58:39 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/27 18:23:00 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,22 @@ void	ft_child_free(t_pipex *pipex)
 	}
 	free(pipex->cmd_args);
 	free(pipex->cmd);
+}
+
+void	ft_waitpid(pid_t *pid, int argc, int status, int last_exit)
+{
+	int	j;
+
+	j = 0;
+	while (j < argc + 1)
+	{
+		waitpid(pid[j++], &status, 0);
+		if (WIFEXITED(status))
+			if (WEXITSTATUS(status) != 0)
+				last_exit = WEXITSTATUS(status);
+		if (last_exit != 0)
+			g_exit_global = last_exit;
+		if (last_exit == 0)
+			g_exit_global = 0;
+	}
 }
