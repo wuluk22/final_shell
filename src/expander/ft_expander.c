@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/24 12:26:18 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:35:20 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_expander(t_cmds *cmd_list, t_env **n_envp)
 		i = 0;
 		while (list->str[i])
 		{
-			expanded_str = ft_expand_variable(n_envp, list->str[i]);	
+			expanded_str = ft_expand_variable(n_envp, list->str[i]);
 			if (!expanded_str)
 			{
 				list->str[i] = NULL;

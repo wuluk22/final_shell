@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:33:11 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 15:58:40 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:40:08 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static int	ft_exit_help(t_cmds *cmd_list, t_lexer *lexer_list)
 		ft_free_list(lexer_list);
 		return (1);
 	}
-	/*if (ft_exit(cmd_list) == 1)
-		return (EXIT_SUCCESS);*/
 	return (0);
 }
 

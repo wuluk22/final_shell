@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_whitespaces.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 11:27:17 by clegros           #+#    #+#             */
+/*   Updated: 2024/06/28 11:30:47 by clegros          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static void	*ft_memalloc(size_t size)
 {
 	char	*alloc;
 
-	alloc = (char*)malloc(size + 1);
+	alloc = (char *)malloc(size + 1);
 	if (alloc && size < 2147483647)
 	{
 		ft_memset(alloc, 0, size);
@@ -43,7 +55,7 @@ static char	*ft_trim(char *str)
 	return (rtrim(ltrim(str)));
 }
 
-static int		ft_word_len(char const *s)
+static int	ft_word_len(char const *s)
 {
 	int	i;
 	int	len;
@@ -100,15 +112,13 @@ char	*ft_whitespaces(char *s)
 
 	if (!s)
 		return (NULL);
-
 	trimmed = ft_trim(s);
 	if (!trimmed)
 		return (NULL);
-
 	new_len = ft_word_len(trimmed);
-	if (!(new_str = (char*)ft_memalloc(new_len + 1)))
+	new_str = (char *)ft_memalloc(new_len + 1);
+	if (!new_str)
 		return (NULL);
-
 	ft_copy_trimmed(new_str, trimmed);
 	return (new_str);
 }

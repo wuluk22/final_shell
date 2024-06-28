@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 12:11:34 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/19 12:49:43 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:58:20 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	ft_process(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 		ft_launch_b(cmd, n_envp, cmd->str);
 	}
 	else if (ft_check_built_ins(cmd->str) == 1)
+	{
 		ft_exec(*n_envp, cmd->str);
+		g_exit_global = 0;
+	}
 	exit(EXIT_SUCCESS);
 }
 

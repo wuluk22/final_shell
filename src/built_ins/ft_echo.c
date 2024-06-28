@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:23:35 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:10:40 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:39:35 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,9 @@ int	ft_echo(t_cmds *cmd)
 		i++;
 	}
 	cmd->str[i] = ft_strtrim(cmd->str[i], "\"");
-	//printf("-%s-\n", cmd->str[i]);
-	if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0 && ft_strlen(cmd->str[i]) == 1)
-	{
-		write(1, "$\n", 2);
-		return (EXIT_SUCCESS);
-	}
+	if (cmd->str[i] && ft_strncmp(cmd->str[i], "$", 1) == 0
+		&& ft_strlen(cmd->str[i]) == 1)
+		return (write(1, "$\n", 2), EXIT_SUCCESS);
 	while (cmd->str[j])
 	{
 		cmd->str[j] = ft_trim_quotes(cmd->str[j]);

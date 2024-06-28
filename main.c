@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/27 16:36:46 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:42:17 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	lexer_list = NULL;
 	cmd_list = NULL;
 	if (!line)
-	{
-		perror("error reading command");
-		return (0);
-	}
+		return(perror("error reading command"), 0);
 	ft_tokenize(&lexer_list, line);
 	ft_lexer_to_cmds(&cmd_list, &lexer_list);
 	if (cmd_list)
@@ -103,8 +100,8 @@ static void	minishell_loop(t_env *n_envp)
 		line = readline(MEOW MIAO);
 		if (!line)
 			break ;
-		if ((ft_strncmp(line, "\r", ft_strlen(line)) != 0) ||
-			(ft_strncmp(line, " ", ft_strlen(line)) != 0))
+		if ((ft_strncmp(line, "\r", ft_strlen(line)) != 0)
+			|| (ft_strncmp(line, " ", ft_strlen(line)) != 0))
 			add_history(line);
 		if (ft_process_command(&n_envp, line))
 		{
@@ -138,5 +135,5 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	minishell_loop(n_envp);
-	return (EXIT_SUCCESS);
+	return (g_exit_global);
 }

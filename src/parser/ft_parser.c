@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:05:23 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/31 13:05:21 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:31:48 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_count_tokens(t_lexer *tokens)
 	temp = tokens;
 	while (temp != NULL && ft_strncmp(temp->token, "|", 1) != 0)
 	{
-		if (!ft_meta(temp->token)) // Assuming ft_is_redirection checks if token is a redirection
+		if (!ft_meta(temp->token))
 			count++;
 		temp = temp->next;
 	}
@@ -72,7 +72,6 @@ void	ft_parse_command(t_cmds **cmd_list, t_lexer **tokens)
 	redirections = NULL;
 	new_cmd = ft_create_simple_cmd_node();
 	ft_parse_redirections(&cmd_start, &redirections);
-
 	token_count = ft_count_tokens(cmd_start);
 	if (new_cmd->str != NULL)
 		ft_free_array(new_cmd->str);

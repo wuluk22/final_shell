@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:48:57 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/24 12:22:24 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:34:43 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,17 @@ static char	*ft_exp_var_loop(t_env **n_envp, char *exp_arg, char *dollar_pos)
 			repl = NULL;
 			if (*(dollar_pos + 1) == '?')
 				repl = ft_replace_exit_status(exp_arg);
-			else if (*(dollar_pos + 1) == '\0')  // Case for string that is only a dollar sign
-				return exp_arg;
+			else if (*(dollar_pos + 1) == '\0')
+				return (exp_arg);
 			else
 				repl = ft_rep_env_var(n_envp, exp_arg, dollar_pos);
 			if (!repl)
-			{
-				free(exp_arg);
-				return (NULL);
-			}
-			//if (exp_arg)
-			//	free(exp_arg);
+				return (free(exp_arg), NULL);
 			exp_arg = repl;
-			dollar_pos = ft_strchr(exp_arg, '$');  // Reset dollar_pos to handle new expanded string
+			dollar_pos = ft_strchr(exp_arg, '$');
 		}
 		else
-		{
 			dollar_pos = ft_strchr(dollar_pos + 1, '$');
-		}
 	}
 	return (exp_arg);
 }

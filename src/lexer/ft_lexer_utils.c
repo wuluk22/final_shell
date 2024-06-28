@@ -6,7 +6,7 @@
 /*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:56:50 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 16:43:58 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:32:07 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current)
 	new_token = (t_lexer *)malloc(sizeof(t_lexer));
 	*current = '\0';
 	trimmed = ft_strtrim(*tok_start, " ");
-	//trimmed = ft_strtrim(trimmed, (char *)9);
-	//trimmed = ft_strtrim(trimmed, (char *)11);
 	if (trimmed == NULL)
 	{
 		exit(EXIT_FAILURE);
