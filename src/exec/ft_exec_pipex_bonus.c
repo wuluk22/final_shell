@@ -110,7 +110,6 @@ static int	pre_check_commands(t_cmds *list, t_env *n_envp)
 				return (0);
 			}
 			g_exit_global = 127;
-			printf("-%s-\n", list->str[0]);
 			if (list->str[0] != NULL || ft_atoi(list->str[0]) != 32)
 				ft_putstr_fd("command not foundi\n", 2);
 			return (0);
