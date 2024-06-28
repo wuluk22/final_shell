@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../includes/minishell.h"
 
 static void	*ft_memalloc(size_t size)
 {
@@ -24,35 +25,6 @@ static void	*ft_memalloc(size_t size)
 	}
 	else
 		return (0);
-}
-
-static char	*ltrim(char *str)
-{
-	if (!str)
-		return (NULL);
-	while (ft_isspace((unsigned char)*str))
-		str++;
-	return (str);
-}
-
-static char	*rtrim(char *str)
-{
-	char	*end;
-
-	if (!str)
-		return (NULL);
-	end = str + ft_strlen(str) - 1;
-	while (end >= str && ft_isspace((unsigned char)*end))
-		end--;
-	*(end + 1) = '\0';
-	return (str);
-}
-
-static char	*ft_trim(char *str)
-{
-	if (!str)
-		return (NULL);
-	return (rtrim(ltrim(str)));
 }
 
 static int	ft_word_len(char const *s)

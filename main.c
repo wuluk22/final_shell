@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:04:56 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/28 11:42:17 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 11:45:16 by clegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	ft_free_envp(t_env *n_envp)
 		current = next;
 	}
 }
+
 t_cmds	*ft_trim_quotes_cmd(t_cmds *cmd)
 {
 	t_cmds	*head;
@@ -40,14 +41,12 @@ t_cmds	*ft_trim_quotes_cmd(t_cmds *cmd)
 	char	*trimmed;
 
 	head = cmd;
-	while(cmd)
+	while (cmd)
 	{
 		i = 0;
 		while (cmd->str && cmd->str[i])
 		{
-			//printf("-%s-\n", cmd->str[i]);
 			trimmed = ft_strtrim(cmd->str[i], "\'");
-			//printf("-%s-\n", trimmed);
 			if (trimmed)
 			{
 				free(cmd->str[i]);
@@ -55,7 +54,6 @@ t_cmds	*ft_trim_quotes_cmd(t_cmds *cmd)
 			}
 			i++;
 		}
-		//if (cmd->next)
 		cmd = cmd->next;
 	}
 	return (head);
@@ -69,7 +67,7 @@ static int	ft_process_command(t_env **n_envp, char *line)
 	lexer_list = NULL;
 	cmd_list = NULL;
 	if (!line)
-		return(perror("error reading command"), 0);
+		return (perror("error reading command"), 0);
 	ft_tokenize(&lexer_list, line);
 	ft_lexer_to_cmds(&cmd_list, &lexer_list);
 	if (cmd_list)
@@ -81,11 +79,11 @@ static int	ft_process_command(t_env **n_envp, char *line)
 		ft_free_list(lexer_list);
 		return (1);
 	}
-	if(cmd_list)
+	if (cmd_list)
 	{
 		ft_cleanup_cmd_list(cmd_list);
 		ft_free_list(lexer_list);
-	}	
+	}
 	return (0);
 }
 
