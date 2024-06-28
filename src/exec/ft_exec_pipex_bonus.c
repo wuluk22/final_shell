@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:48:28 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/28 11:37:33 by clegros          ###   ########.fr       */
+/*   Updated: 2024/06/28 12:01:23 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_handle_process(t_cmds *cmd, int nb, int argc)
 	close(sv_stdin);
 }
 
-static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
+pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 {
 	pid_t	pid;
 
@@ -83,69 +83,4 @@ static pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc)
 	else
 		ft_parent(cmd, pid);
 	return (pid);
-}
-
-static void	pre_check_commands(t_cmds *list, t_env *n_envp)
-{
-	char	*path;
-	char	**envp;
-
-	if (ft_strncmp(list->str[0], "exit", ft_strlen(list->str[0])) == 0)
-	{
-		if (list->str[1] && list->str[2])
-			g_exit_global = 1;
-		return ;
-	}
-	envp = ft_transform(n_envp);
-	while (list)
-	{
-		path = ft_get_path(envp, list->str[0]);
-		if (path == NULL)
-		{
-			if (!list->str[0] && !list->str[1] && list->redirections)
-			{
-				g_exit_global = 0;
-				return ;
-			}
-			g_exit_global = 127;
-			ft_putstr_fd("command not found\n", 2);
-			return ;
-		}
-		list = list->next;
-	}
-}
-
-void	ft_multi_pipe(t_cmds *list, t_env **n_envp, int argc, int j)
-{
-	pid_t	*pid;
-	int		status;
-	int		last_exit;
-
-	last_exit = 0;
-	status = 0;
-	pid = malloc((argc + 1) * sizeof(pid_t));
-	pre_check_commands(list, *n_envp);
-	if (!pid || !list)
-		return ;
-	ft_memset(pid, 0, (argc + 1) * sizeof(pid_t));
-	ft_init_multi(list);
-	while (++j <= argc)
-	{
-		pid[j] = ft_pipe(list, n_envp, j, argc);
-		if (list->next)
-			list = list->next;
-	}
-	j = 0;
-	while (j < argc + 1)
-	{
-		waitpid(pid[j++], &status, 0);
-		if (WIFEXITED(status))
-			if (WEXITSTATUS(status) != 0)
-				last_exit = WEXITSTATUS(status);
-		if (last_exit != 0)
-			g_exit_global = last_exit;
-		if (last_exit == 0)
-			g_exit_global = 0;
-	}
-	ft_free_multi(pid, last_exit);
 }

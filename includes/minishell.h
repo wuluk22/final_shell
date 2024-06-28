@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/27 18:23:42 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:02:04 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i);
 char	**ft_transform(t_env *n_envp);
 void	ft_check(t_cmds *cmd, int fd, int sv_stdin);
 void	ft_parent(t_cmds *cmd, pid_t pid);
-void	ft_waitpid(pid_t *pid, int argc, int status, int last_exit);
+pid_t	ft_pipe(t_cmds *cmd, t_env **n_envp, int nb, int argc);
+void	ft_pre_check_commands(t_cmds *list, t_env *n_envp);
 
 //expand
 char	*ft_get_env_value(t_env *n_envp, const char *var_name);

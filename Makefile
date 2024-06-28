@@ -30,6 +30,8 @@ SRC     = src/lexer/ft_str_utils.c\
 			src/exec/ft_add_envp.c\
 			src/exec/ft_add_envp_utils.c\
 			src/exec/ft_exec_utils.c\
+			src/exec/ft_multi_pipe.c\
+			src/exec/ft_pre_check_command.c\
 			src/expander/ft_expander.c\
 			src/expander/ft_expander_utls.c\
 			src/expander/ft_expander_utils.c\
