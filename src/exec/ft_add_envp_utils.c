@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_envp_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 10:59:31 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 17:44:32 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:01:34 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ t_env	*ft_init_envp(t_env *n_envp, t_env *head, char **envp, int i)
 		if (envp[i + 1])
 		{
 			n_envp->next = malloc(sizeof(t_env));
+			if (n_envp->next == NULL)
+				return (NULL);
 			n_envp = n_envp->next;
 		}
 		ft_free_temp_array(temp);

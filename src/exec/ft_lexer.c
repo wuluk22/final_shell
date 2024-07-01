@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 22:09:28 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/31 12:47:05 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:05:38 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	ft_is_command_valid(const char *command)
 	char	*token;
 	int		result;
 
+	//getenv ??
 	path = getenv("PATH");
 	path_copy = ft_duplicate_path(path);
 	if (path_copy == NULL)

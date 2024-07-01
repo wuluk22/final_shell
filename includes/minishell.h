@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:51:32 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/28 12:02:04 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:20:54 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,5 +235,8 @@ void	ft_putendl_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
 void	ft_cleanup_cmd_list(t_cmds *cmd_list);
 char	*ft_trim_quotes(char *str);
+char	*ft_strcpy(char *dest, char *src);
+char	*ft_strndup(const char *s, size_t n);
+char	*ft_strstr(const char *haystack, const char *needle);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:48:28 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/28 12:01:23 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:27:06 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_exec(t_env *n_envp, char **cmd)
 	{
 		exit(127);
 	}
+	ft_set_dfl_signal();
 	if (execve(path, cmd, envp) == -1)
 	{
 		exit(EXIT_FAILURE);

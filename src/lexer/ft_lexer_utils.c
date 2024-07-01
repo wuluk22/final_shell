@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:56:50 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/28 11:32:07 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:15:30 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	ft_add_crt_token(t_lexer **list, char **tok_start, char *current)
 	t_lexer	*new_token;
 	char	*trimmed;
 
+	new_token = NULL;
 	new_token = (t_lexer *)malloc(sizeof(t_lexer));
+	if (!new_token)
+		return ;
 	*current = '\0';
 	trimmed = ft_strtrim(*tok_start, " ");
 	if (trimmed == NULL)

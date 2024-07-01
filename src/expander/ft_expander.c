@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:59 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/28 11:35:20 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 15:01:45 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_extract_env_var_name(char *dollar_pos)
 	var_name = ft_strdup(dollar_pos + 1);
 	if (!var_name)
 	{
-		perror("strndup");
+		perror("strdup");
 		exit(EXIT_FAILURE);
 	}
 	return (var_name);

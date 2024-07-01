@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:24:08 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/14 18:39:39 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:00:27 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*static t_env	*ft_remove(t_cmds *cmd, t_env **n_envp)
-{
-	t_env	*current;
-	t_env	*head;
-	t_env	*new_envp;
-	t_env	*new_node;
-
-	current = *n_envp;
-	new_envp = NULL;
-	while (current)
-	{
-		if (!ft_strncmp(current->key, cmd->str[1], ft_strlen(cmd->str[1])))
-		{
-			current->key = NULL;
-			current->value = NULL;
-		}
-		if (current->key != NULL)
-		{
-			new_node = malloc(sizeof(t_env));
-			new_node->key = current->key;
-			new_node->value = current->value;
-			new_node->next = NULL;
-			if (new_envp == NULL)
-			{
-				new_envp = new_node;
-				head = new_envp;
-			}
-			else
-			{
-				new_envp->next = new_node;
-				new_envp = new_envp->next;
-			}
-		}
-		if (current->next == NULL)
-			break ;
-		current = current->next;
-	}
-	return (head);
-}*/
 
 static t_env	*ft_remove_node(t_cmds *cmd, t_env *head)
 {

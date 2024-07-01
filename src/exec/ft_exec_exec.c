@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 22:09:06 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/18 16:36:07 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:02:09 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	ft_command_exec(t_cmds *list, t_env **n_envp, char **args)
 	t_cmds	*head;
 
 	head = malloc(sizeof(t_cmds));
+	if (!head)
+		return ;
 	head = NULL;
 	i = 0;
 	(void)args;

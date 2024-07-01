@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:24:45 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/24 12:23:35 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:11:40 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*ft_replace_substr(char *str, char *old_substr, char *new_substr)
 	{
 		if (ft_strnstr(str, old_substr, ft_strlen(old_substr)) == str)
 		{
-			strcpy(&result[i], new_substr);
+			ft_strcpy(&result[i], new_substr);
 			i += newlen;
 			str += oldlen;
 		}

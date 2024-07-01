@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:52:14 by clegros           #+#    #+#             */
-/*   Updated: 2024/05/14 15:56:39 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:04:09 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_tokenize(t_lexer **list, char *cmd)
 	bool	in_quotes;
 
 	new_token = (t_lexer *)malloc(sizeof(t_lexer));
+	if (!new_token)
+		return ;
 	token_start = cmd;
 	current = cmd;
 	current_quote = '\0';
