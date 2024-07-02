@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegros <clegros@student.s19.be>           +#+  +:+       +#+        */
+/*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:23:13 by clegros           #+#    #+#             */
-/*   Updated: 2024/06/28 11:38:03 by clegros          ###   ########.fr       */
+/*   Updated: 2024/07/02 14:17:02 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,19 @@ static int	ft_parse_exit_arguments(char **args)
 
 int	ft_exit(t_cmds *cmd)
 {
+	int	i;
+	t_cmds	*head;
+
+	i = 0;
+	head = cmd;
+	while (head)
+	{
+		if (!ft_strncmp("exit", head->str[0], ft_strlen(head->str[0])))
+			i++;
+		head = head->next;
+	}
+	//printf("%d", i);
+	if (i >= 2)
+		return (1);
 	return (ft_parse_exit_arguments(cmd->str));
 }

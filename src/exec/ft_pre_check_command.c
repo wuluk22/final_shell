@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:59:03 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/06/28 12:02:08 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:25:24 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,26 @@ static void	check_exit_command(t_cmds *list)
 
 static void	handle_command_not_found(char *path, t_cmds *list)
 {
+	int	i;
+	t_cmds	*head;
+
+	i = 0;
+	head = list;
+	while (head)
+	{
+		if (!ft_strncmp("exit", head->str[0], ft_strlen(head->str[0])))
+			i++;
+		head = head->next;
+	}
 	if (path == NULL)
 	{
-		if (!list->str[0] && !list->str[1] && list->redirections)
+		if ((!list->str[0] && !list->str[1] && list->redirections) || i >= 2)
 		{
 			g_exit_global = 0;
 			return ;
 		}
 		g_exit_global = 127;
-		ft_putstr_fd("command not found\n", 2);
+		ft_putstr_fd("command not found8\n", 2);
 	}
 }
 
