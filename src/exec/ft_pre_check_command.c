@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:59:03 by yohanafi          #+#    #+#             */
-/*   Updated: 2024/07/02 14:25:24 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:08:55 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	handle_command_not_found(char *path, t_cmds *list)
 			return ;
 		}
 		g_exit_global = 127;
-		ft_putstr_fd("command not found8\n", 2);
+		ft_putstr_fd("command not found\n", 2);
 	}
 }
 

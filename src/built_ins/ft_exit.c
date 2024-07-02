@@ -6,7 +6,7 @@
 /*   By: yohanafi <yohanafi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:23:13 by clegros           #+#    #+#             */
-/*   Updated: 2024/07/02 14:17:02 by yohanafi         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:26:32 by yohanafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	ft_exit(t_cmds *cmd)
 			i++;
 		head = head->next;
 	}
-	//printf("%d", i);
 	if (i >= 2)
 		return (1);
 	return (ft_parse_exit_arguments(cmd->str));
