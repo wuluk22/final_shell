@@ -75,7 +75,7 @@ static int	ft_parse_exit_arguments(char **args)
 
 int	ft_exit(t_cmds *cmd)
 {
-	int	i;
+	int		i;
 	t_cmds	*head;
 
 	i = 0;

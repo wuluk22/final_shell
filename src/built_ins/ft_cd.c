@@ -62,7 +62,7 @@ static t_env	*ft_change_pwd(t_cmds *cmd, t_env **n_envp)
 	cd = NULL;
 	if (cmd->str[1])
 		if (ft_change_directory(cmd, &crt_wd, &new_wd) != 0)
-			return (NULL);
+			return (head);
 	if (!cmd->str[1])
 	{
 		while (ft_strncmp(current->key, "HOME", 4) != 0)

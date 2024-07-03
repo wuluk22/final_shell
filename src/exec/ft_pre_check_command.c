@@ -24,7 +24,7 @@ static void	check_exit_command(t_cmds *list)
 
 static void	handle_command_not_found(char *path, t_cmds *list)
 {
-	int	i;
+	int		i;
 	t_cmds	*head;
 
 	i = 0;
