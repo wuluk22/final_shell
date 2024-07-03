@@ -107,7 +107,6 @@ int	ft_expander(t_cmds *cmd_list, t_env **n_envp)
 				list->str[i] = NULL;
 				return (EXIT_FAILURE);
 			}
-			free(list->str[i]);
 			list->str[i] = expanded_str;
 			i++;
 		}

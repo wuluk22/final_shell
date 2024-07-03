@@ -50,7 +50,7 @@ static int	ft_handle_numeric_argument(char *arg)
 	}
 	else
 	{
-		ft_putstr_fd("numeric argument required\n", 2);
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		exit(255);
 		return (0);
 	}

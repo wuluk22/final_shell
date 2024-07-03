@@ -48,7 +48,7 @@ void	ft_add_token(t_lexer **list, t_lexer *new_token, const char *token)
 	{
 		free(trimmed_token);
 		free(new_token);
-		printf("Erreur d'allocation mémoire\n");
+		printf("memory allocation error\n");
 		exit(EXIT_FAILURE);
 	}
 	free(trimmed_token);

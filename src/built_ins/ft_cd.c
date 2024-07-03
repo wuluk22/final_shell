@@ -36,14 +36,17 @@ static int	ft_change_directory(t_cmds *cmd, char **crt_wd, char **new_wd)
 	}
 	*crt_wd = ft_strjoin(*crt_wd, "/");
 	*new_wd = ft_strjoin(*crt_wd, cmd->str[1]);
-	if (chdir(*new_wd) == -1 || cmd->str[2])
+	if (access(*new_wd, R_OK) == -1 || cmd->str[2])
 	{
-		ft_putstr_fd(" No such file or directory\n", 2);
+		printf("minishell: %s: %s: No such file or directory\n",
+			cmd->str[0], cmd->str[1]);
 		g_exit_global = 1;
 		free(*crt_wd);
 		free(*new_wd);
 		return (1);
 	}
+	else
+		chdir(*new_wd);
 	return (0);
 }
 

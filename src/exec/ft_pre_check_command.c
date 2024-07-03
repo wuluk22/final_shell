@@ -43,7 +43,8 @@ static void	handle_command_not_found(char *path, t_cmds *list)
 			return ;
 		}
 		g_exit_global = 127;
-		ft_putstr_fd("command not found\n", 2);
+		if (ft_check_built_ins(list->str) != 0)
+			printf("minishell: %s: command not found\n", list->str[0]);
 	}
 }
 

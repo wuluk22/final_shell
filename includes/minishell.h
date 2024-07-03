@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <termios.h>
 # include "../utils/get_next_line/ft_get_next_line.h"
 # include "../utils/libft.h"
 
